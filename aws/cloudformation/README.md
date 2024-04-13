@@ -4,6 +4,12 @@ TO use this CI/CD pipeline you need to have an AWS account and a github account.
 
 Personally when running cfn templates I prefer to use the aws console because it is easier to fill in the parameters and see the outputs. But if you prefer to use the aws cli, you can run the commands below to create the resources in your AWS account.
 
+Also replace the values in the parameters with your own values. I used default values in most of the parameters. Such as the name of the repository, the name of the user or organization that owns the repo, the environment tag, the user tag and the unit tag. If you fork this repo and don't change the values in the parameters, you can't use github actions because the name of your repo and and the name of the user or organization that owns the repo is different from mine.
+
+Also I don't know why but this works in only `us-east-1` region. I tried to create the resources in `eu-west-2` region but it didn't work. I got this error `An error occurred (ValidationError) when calling the ValidateTemplate operation: Template format error: Unrecognized resource types: [AWS::ECR::PublicRepository]`. Check out this [issue on Github](https://github.com/awsdocs/aws-cloudformation-user-guide/issues/956#issuecomment-813360276).
+
+Replace {your-repo-name} with the name of your repository, like `"my-repo-name"`. Replace {your-github-username} with your github username or organization name, like `"my-github-username"`. And on and on for the other parameters.
+
 ## Table of Contents
 
 - [Create IAM Role](#create-iam-role)
