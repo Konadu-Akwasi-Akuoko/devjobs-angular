@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:cicd": "jest --ci --coverage",
     "serve:ssr:devjobs-angular": "node dist/devjobs-angular/server/server.mjs"
   },
   "private": true,
@@ -23,6 +26,7 @@
     "@angular/ssr": "^17.0.6",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
+    "ts-node": "^10.9.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },
@@ -31,7 +35,10 @@
     "@angular/cli": "^17.0.6",
     "@angular/compiler-cli": "^17.0.0",
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.18.0",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.0.3",
     "typescript": "~5.2.2"
   }
 }
