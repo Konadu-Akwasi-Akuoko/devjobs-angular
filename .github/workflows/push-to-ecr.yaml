@@ -1,0 +1,21 @@
+name: push-to-ecr
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REPOSITORY_NAME: angular-devjobs-public-repository
+  AWS_REGION: us-east-1
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  push-to-ecr:
+    name: Push to ECR
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
