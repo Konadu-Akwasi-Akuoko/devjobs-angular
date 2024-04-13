@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "This template creates an IAM role for use with Github Actions."
+
+Parameters:
+  GitHubOrg:
+    Description: Name of GitHub organization/user (case sensitive)
+    Type: String
+    Default: Konadu-Akwasi-Akuoko
+  GithubRepository:
+    Description: Name of GitHub repository (case sensitive)
+    Type: String
+    Default: devjobs-angular
+  EnvironmentTag:
+    Type: String
+    Description: "The value of the 'Environment' tag."
+    Default: "Development"
+  UserTag:
+    Type: String
+    Description: "The value of the 'User' tag."
+    Default: "Akwasi Konadu"
+  UnitTag:
+    Type: String
+    Description: "The value of the 'Unit' tag."
+    Default: "IAM Role"
+
+Resources:
+  DeployToECRRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "DeployToECRRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Federated: !Sub "arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com"
+            Action: "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: "sts.amazonaws.com"
+              StringLike:
+                token.actions.githubusercontent.com:sub: "repo:Konadu-Akwasi-Akuoko/devjobs-angular:*"
+      Path: /
+      Policies:
+        - PolicyName: "ECR-Policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ecr:GetDownloadUrlForLayer"
+                  - "ecr:BatchGetImage"
+                  - "ecr:BatchCheckLayerAvailability"
+                  - "ecr:PutImage"
+                  - "ecr:InitiateLayerUpload"
+                  - "ecr:UploadLayerPart"
+                  - "ecr:CompleteLayerUpload"
+                Resource: "*" # Allow all resources
+      Tags:
+        - Key: "Name"
+          Value: "DeployToECRRole"
+        - Key: "Environment"
+          Value: !Ref EnvironmentTag
+        - Key: "User"
+          Value: !Ref UserTag
+        - Key: "Unit"
+          Value: !Ref UnitTag
+
+Outputs:
+  DeployToECRRoleArn:
+    Description: "The ARN of the DeployToECRRole IAM role"
+    Value: !GetAtt DeployToECRRole.Arn
