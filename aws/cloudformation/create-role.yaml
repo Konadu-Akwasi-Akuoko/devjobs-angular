@@ -38,8 +38,7 @@ Resources:
             Condition:
               StringEquals:
                 token.actions.githubusercontent.com:aud: "sts.amazonaws.com"
-              StringLike:
-                token.actions.githubusercontent.com:sub: !Sub "repo:${GitHubOrg}/${GithubRepository}:*"
+
       Path: /
       Policies:
         - PolicyName: "ECR-Policy"
