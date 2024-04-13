@@ -39,7 +39,7 @@ Resources:
               StringEquals:
                 token.actions.githubusercontent.com:aud: "sts.amazonaws.com"
               StringLike:
-                token.actions.githubusercontent.com:sub: !Sub "repo:${GitHubOrg}/${GithubRepository}:*"
+                token.actions.githubusercontent.com:sub: "repo:Konadu-Akwasi-Akuoko/devjobs-angular:*"
       Path: /
       Policies:
         - PolicyName: "ECR-Policy"
