@@ -92,7 +92,7 @@ Resources:
     Condition: CreateOIDCProvider
     Properties:
       # The URL of the OIDC identity provider. This is the URL of the GitHub Actions token endpoint.
-      Url: https://token.actions.githubusercontent.com
+      Url: https://token.actions.githubusercontent.com/
       # A list of client IDs (also known as audiences) that are associated with the IAM OIDC provider.
       ClientIdList:
         - sts.amazonaws.com
