@@ -1,21 +1,45 @@
-name: push-to-ecr
+name: Docker Image CI
+
 on:
   push:
     branches:
       - main
 
 env:
-  REPOSITORY_NAME: angular-devjobs-public-repository
-  AWS_REGION: us-east-1
-  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: us-east-1
 
 jobs:
-  push-to-ecr:
-    name: Push to ECR
+  build:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_DEPLOY_ROLE }}
+          role-session-name: myGitHubActions
+
+      - name: Login to Amazon ECR
+        id: login-ecr-public
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
+
+      - name: Build, tag, and push image to Amazon ECR Public
+        env:
+          REGISTRY: ${{ steps.login-login-ecr-public.outputs.registry }}
+          REGISTRY_ALIAS: my-ecr-public-registry-alias
+          REPOSITORY: angular-devjobs-public-repository
+          IMAGE_TAG: ${{ github.sha }}
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        run: |
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
