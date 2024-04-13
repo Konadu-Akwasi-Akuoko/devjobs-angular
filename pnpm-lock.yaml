@@ -52,6 +52,9 @@ dependencies:
     version: 0.14.4
 
 devDependencies:
+  '@angular-builders/jest':
+    specifier: ^17.0.3
+    version: 17.0.3(@angular-devkit/build-angular@17.3.4)(@angular/compiler-cli@17.3.4)(@angular/core@17.3.4)(@angular/platform-browser-dynamic@17.3.4)(@babel/core@7.24.4)(@types/node@18.19.31)(jest@29.7.0)(typescript@5.2.2)
   '@angular-devkit/build-angular':
     specifier: ^17.0.6
     version: 17.3.4(@angular/compiler-cli@17.3.4)(@angular/platform-server@17.3.4)(@types/express@4.17.21)(@types/node@18.19.31)(jest@29.7.0)(typescript@5.2.2)
@@ -88,6 +91,56 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+    dev: true
+
+  /@angular-builders/common@1.0.2(@types/node@18.19.31)(typescript@5.2.2):
+    resolution: {integrity: sha512-lUusRq6jN1It5LcUTLS6Q+AYAYGTo/EEN8hV0M6Ek9qXzweAouJaSEnwv7p04/pD7yJTl0YOCbN79u+wGm3x4g==}
+    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
+    dependencies:
+      '@angular-devkit/core': 17.3.4
+      ts-node: 10.9.2(@types/node@18.19.31)(typescript@5.2.2)
+      tsconfig-paths: 4.2.0
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - chokidar
+      - typescript
+    dev: true
+
+  /@angular-builders/jest@17.0.3(@angular-devkit/build-angular@17.3.4)(@angular/compiler-cli@17.3.4)(@angular/core@17.3.4)(@angular/platform-browser-dynamic@17.3.4)(@babel/core@7.24.4)(@types/node@18.19.31)(jest@29.7.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-LW4s8t+NLnWR7Aud+EZup8dOBfQF8rfOIncsarDtP/48rz/Ucnzvum7xEt/NYAlZ6y/Dpk7wO6SlqAsaOPf8mA==}
+    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
+    peerDependencies:
+      '@angular-devkit/build-angular': ^17.0.0
+      '@angular/compiler-cli': ^17.0.0
+      '@angular/core': ^17.0.0
+      '@angular/platform-browser-dynamic': ^17.0.0
+      jest: '>=29'
+    dependencies:
+      '@angular-builders/common': 1.0.2(@types/node@18.19.31)(typescript@5.2.2)
+      '@angular-devkit/architect': 0.1703.4
+      '@angular-devkit/build-angular': 17.3.4(@angular/compiler-cli@17.3.4)(@angular/platform-server@17.3.4)(@types/express@4.17.21)(@types/node@18.19.31)(jest@29.7.0)(typescript@5.2.2)
+      '@angular-devkit/core': 17.3.4
+      '@angular/compiler-cli': 17.3.4(@angular/compiler@17.3.4)(typescript@5.2.2)
+      '@angular/core': 17.3.4(rxjs@7.8.1)(zone.js@0.14.4)
+      '@angular/platform-browser-dynamic': 17.3.4(@angular/common@17.3.3)(@angular/compiler@17.3.4)(@angular/core@17.3.4)(@angular/platform-browser@17.3.4)
+      jest: 29.7.0(@types/node@18.19.31)(ts-node@10.9.2)
+      jest-preset-angular: 14.0.3(@angular-devkit/build-angular@17.3.4)(@angular/compiler-cli@17.3.4)(@angular/core@17.3.4)(@angular/platform-browser-dynamic@17.3.4)(@babel/core@7.24.4)(jest@29.7.0)(typescript@5.2.2)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@jest/types'
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - babel-jest
+      - bufferutil
+      - canvas
+      - chokidar
+      - supports-color
+      - typescript
+      - utf-8-validate
     dev: true
 
   /@angular-devkit/architect@0.1703.4:
@@ -6278,6 +6331,10 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
+  /minimist@1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+    dev: true
+
   /minipass-collect@2.0.1:
     resolution: {integrity: sha512-D7V8PO9oaz7PWGLbCACuI1qEOsq7UKfLotx/C0Aet43fCUB/wfQ7DYeq2oR/svFJGYDHPr38SHATeaj/ZoKHKw==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -7715,6 +7772,11 @@ packages:
       ansi-regex: 6.0.1
     dev: true
 
+  /strip-bom@3.0.0:
+    resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
+    engines: {node: '>=4'}
+    dev: true
+
   /strip-bom@4.0.0:
     resolution: {integrity: sha512-3xurFv5tEgii33Zi8Jtp55wEIILR9eh34FAW00PZf+JnSsTmV/ioewSgQl97JHvgjoRGwPShsWm+IdrxB35d0w==}
     engines: {node: '>=8'}
@@ -7943,6 +8005,15 @@ packages:
       typescript: 5.2.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+
+  /tsconfig-paths@4.2.0:
+    resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
+    engines: {node: '>=6'}
+    dependencies:
+      json5: 2.2.3
+      minimist: 1.2.8
+      strip-bom: 3.0.0
+    dev: true
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
