@@ -73,7 +73,7 @@ Resources:
                 token.actions.githubusercontent.com:aud: !Ref OIDCAudience
               StringLike:
                 # The subject (sub) in the incoming request must match the pattern repo:${GitHubOrg}/${RepositoryName}:*
-                token.actions.githubusercontent.com:sub: "repo:Konadu-Akwasi-Akuoko/devjobs-angular:*"
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${RepositoryName}:*
       Tags:
         - Key: "Name"
           Value: !Ref RepositoryName
