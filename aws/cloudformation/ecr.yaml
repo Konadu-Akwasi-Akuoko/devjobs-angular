@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "This template creates an ECR repository."
+
+Parameters:
+  RepositoryName:
+    Type: String
+    Description: "The name of the ECR repository."
+    Default: "angular-devjobs-public-repository"
+  AboutText:
+    Type: String
+    Description: "A description of the repository."
+    Default: "This repository contains images for Angular DevJobs web app."
+  OperatingSystems:
+    Type: String
+    Description: "A list of operating systems that the images support."
+    Default: "Linux"
+  Architectures:
+    Type: String
+    Description: "A list of architectures that the images support."
+    Default: "x86-64"
+  RepositoryDescription:
+    Type: String
+    Description: "Another description field for the repository."
+    Default: "Repository for hosting images for Angular DevJobs web app."
+  EnvironmentTag:
+    Type: String
+    Description: "The value of the 'Environment' tag."
+    Default: "Development"
+  UserTag:
+    Type: String
+    Description: "The value of the 'User' tag."
+    Default: "Akwasi Konadu"
+  UnitTag:
+    Type: String
+    Description: "The value of the 'Unit' tag."
+    Default: "ECR Repository"
+
+Resources:
+  PublicECRRepository:
+    Type: AWS::ECR::PublicRepository
+    Properties:
+      RepositoryName: !Ref RepositoryName
+      RepositoryCatalogData:
+        AboutText: !Ref AboutText
+        OperatingSystems:
+          - !Ref OperatingSystems
+        Architectures:
+          - !Ref Architectures
+        RepositoryDescription: !Ref RepositoryDescription
+      RepositoryPolicyText:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: "AllowPushPull"
+            Effect: "Allow"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - "ecr:GetDownloadUrlForLayer"
+              - "ecr:BatchGetImage"
+              - "ecr:BatchCheckLayerAvailability"
+              - "ecr:PutImage"
+              - "ecr:InitiateLayerUpload"
+              - "ecr:UploadLayerPart"
+              - "ecr:CompleteLayerUpload"
+      Tags:
+        - Key: "Name"
+          Value: !Ref RepositoryName
+        - Key: "Environment"
+          Value: !Ref EnvironmentTag
+        - Key: "User"
+          Value: !Ref UserTag
+        - Key: "Unit"
+          Value: !Ref UnitTag
