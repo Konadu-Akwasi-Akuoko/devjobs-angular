@@ -32,10 +32,7 @@ jobs:
           registry-type: public
 
       - name: Build, tag, and push image to Amazon ECR Public
-        env:
-          REGISTRY: 339713112445.dkr.ecr.us-east-1.amazonaws.com/s1p6w2l2
-          REPOSITORY: angular-devjobs-public-repository
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          docker build -t angular-devjobs-public-repository .
+          docker tag angular-devjobs-public-repository:latest public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${{ github.sha }}
+          docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${{ github.sha }}
