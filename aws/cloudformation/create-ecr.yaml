@@ -65,7 +65,7 @@ Resources:
           - Sid: "AllowDeployRolePushPull"
             Effect: "Allow"
             Principal:
-              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/DeployToECRRole"
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/ActionsOIDCRole"
             Action:
               - "ecr:GetDownloadUrlForLayer"
               - "ecr:BatchGetImage"
