@@ -33,7 +33,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR Public
         env:
-          REGISTRY: ${{ steps.login-login-ecr-public.outputs.registry }}
+          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
           REGISTRY_ALIAS: my-ecr-public-registry-alias
           REPOSITORY: angular-devjobs-public-repository
           IMAGE_TAG: ${{ github.sha }}
