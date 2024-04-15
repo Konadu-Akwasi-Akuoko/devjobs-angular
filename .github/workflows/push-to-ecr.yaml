@@ -7,6 +7,8 @@ on:
 
 env:
   AWS_DEFAULT_REGION: us-east-1
+  ECR_REGISTRY: public.ecr.aws/s1p6w2l2
+  DOCKER_TAG_NAME: devjobs-angular
 
 jobs:
   build:
@@ -32,14 +34,7 @@ jobs:
           registry-type: public
 
       - name: Build, tag, and push image to Amazon ECR Public
-        env:
-          REGISTRY: ${{ steps.login-login-ecr-public.outputs.registry }}
-          REGISTRY_ALIAS: my-ecr-public-registry-alias
-          REPOSITORY: angular-devjobs-public-repository
-          IMAGE_TAG: ${{ github.sha }}
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
         run: |
-          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
+          docker build -t ${{env.DOCKER_TAG_NAME}} .
+          docker tag ${{env.DOCKER_TAG_NAME}}:latest ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
+          docker push ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}

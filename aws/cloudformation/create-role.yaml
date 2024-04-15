@@ -37,9 +37,9 @@ Resources:
             Action: "sts:AssumeRoleWithWebIdentity"
             Condition:
               StringEquals:
-                token.actions.githubusercontent.com:aud: "sts.amazonaws.com"
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
               StringLike:
-                token.actions.githubusercontent.com:sub: "repo:Konadu-Akwasi-Akuoko/devjobs-angular:*"
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${GithubRepository}:*
       Path: /
       Policies:
         - PolicyName: "ECR-Policy"

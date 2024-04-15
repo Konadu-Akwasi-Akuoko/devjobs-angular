@@ -18,6 +18,10 @@ Parameters:
     Type: String
     Description: "A list of architectures that the images support."
     Default: "x86-64"
+  RoleName:
+    Type: String
+    Description: "The name of the role to assume. It must be the same role name as in github-actions-oidc-federation-and-role.yaml."
+    Default: "ActionsOIDCRole"
   RepositoryDescription:
     Type: String
     Description: "Another description field for the repository."
@@ -65,7 +69,7 @@ Resources:
           - Sid: "AllowDeployRolePushPull"
             Effect: "Allow"
             Principal:
-              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/DeployToECRRole"
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/${RoleName}"
             Action:
               - "ecr:GetDownloadUrlForLayer"
               - "ecr:BatchGetImage"

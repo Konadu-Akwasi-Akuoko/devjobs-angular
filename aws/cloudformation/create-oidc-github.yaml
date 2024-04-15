@@ -1,107 +1,55 @@
-# Define input parameters for the template
 Parameters:
-  # The name of your GitHub organization or user
   GitHubOrg:
     Description: Name of GitHub organization/user (case sensitive)
     Type: String
     Default: Konadu-Akwasi-Akuoko
-
-  # The name of your GitHub repository
   RepositoryName:
     Description: Name of GitHub repository (case sensitive)
     Type: String
     Default: devjobs-angular
-
-  # The ARN of an existing OIDC provider, if you have one
   OIDCProviderArn:
     Description: Arn for the GitHub OIDC Provider if you have one.
     Default: ""
     Type: String
-
-  # The audience for the OIDC provider
   OIDCAudience:
     Description: Audience supplied to configure-aws-credentials.
     Default: "sts.amazonaws.com"
     Type: String
-  EnvironmentTag:
-    Type: String
-    Description: "The value of the 'Environment' tag."
-    Default: "Development"
-  UserTag:
-    Type: String
-    Description: "The value of the 'User' tag."
-    Default: "Akwasi Konadu"
-  UnitTag:
-    Type: String
-    Description: "The value of the 'Unit' tag."
-    Default: "OIDC Provider"
 
-# Define conditions for the resources to be created
 Conditions:
-  # Check if an OIDC provider ARN was provided
-  CreateOIDCProvider:
-    # Use the !Equals function to compare two values, if they are equal, the condition is true.
-    #We are checking if the OIDCProviderArn parameter is an empty string. If it is, we will create an OIDC provider.
-    #If it is not, we will use the existing OIDC provider.
-    !Equals
-    - !Ref OIDCProviderArn # The first value is the OIDCProviderArn parameter
-    - "" # The second value is an empty string
+  CreateOIDCProvider: !Equals
+    - !Ref OIDCProviderArn
+    - ""
 
-# Define the resources to be created
 Resources:
-  # Create an IAM role
-  # Define an IAM role
   Role:
     Type: AWS::IAM::Role
     Properties:
-      # The trust policy for the IAM role, which defines who can assume the role
       AssumeRolePolicyDocument:
         Statement:
-          - # A statement in the trust policy
-            Effect: Allow # Allows the specified principal to assume the role
-            Action: sts:AssumeRoleWithWebIdentity # The action that the principal can perform
+          - Effect: Allow
+            Action: sts:AssumeRoleWithWebIdentity
             Principal:
-              # The principal (in this case, a federated user) that is allowed to assume the role
               Federated: !If
-                - CreateOIDCProvider # Condition to check if an OIDC provider should be created
-                - !Ref GithubOidc # If true, use the OIDC provider created in this stack
-                - !Ref OIDCProviderArn # If false, use the existing OIDC provider ARN
+                - CreateOIDCProvider
+                - !Ref GithubOidc
+                - !Ref OIDCProviderArn
             Condition:
-              # Conditions that must be met for the principal to assume the role
               StringEquals:
-                # The audience (aud) in the incoming request must match the OIDCAudience parameter
                 token.actions.githubusercontent.com:aud: !Ref OIDCAudience
               StringLike:
-                # The subject (sub) in the incoming request must match the pattern repo:${GitHubOrg}/${RepositoryName}:*
                 token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${RepositoryName}:*
-      Tags:
-        - Key: "Name"
-          Value: !Ref RepositoryName
-        - Key: "Environment"
-          Value: !Ref EnvironmentTag
-        - Key: "User"
-          Value: !Ref UserTag
-        - Key: "Unit"
-          Value: !Ref UnitTag
 
-  # Create an IAM OIDC provider if one doesn't already exist
-  # Define an IAM OIDC provider
   GithubOidc:
     Type: AWS::IAM::OIDCProvider
-    # Only create this resource if the CreateOIDCProvider condition is true
     Condition: CreateOIDCProvider
     Properties:
-      # The URL of the OIDC identity provider. This is the URL of the GitHub Actions token endpoint.
       Url: https://token.actions.githubusercontent.com
-      # A list of client IDs (also known as audiences) that are associated with the IAM OIDC provider.
       ClientIdList:
         - sts.amazonaws.com
-      # A list of certificate thumbprints that are associated with the IAM OIDC provider.
-      # We don't need to specify this for GitHub Actions, so we use a placeholder value, because Github's OIDC uses AWS's library of trusted certificates.
       ThumbprintList:
         - ffffffffffffffffffffffffffffffffffffffff
 
-# Define the outputs of the stack
 Outputs:
   Role:
     Value: !GetAtt Role.Arn
