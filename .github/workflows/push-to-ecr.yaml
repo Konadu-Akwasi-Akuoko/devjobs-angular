@@ -7,8 +7,6 @@ on:
 
 env:
   AWS_DEFAULT_REGION: us-east-1
-  ECR_REGISTRY: public.ecr.aws/s1p6w2l2
-  DOCKER_TAG_NAME: devjobs-angular
 
 jobs:
   build:
@@ -35,6 +33,6 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR Public
         run: |
-          docker build -t ${{env.DOCKER_TAG_NAME}} .
-          docker tag ${{env.DOCKER_TAG_NAME}}:latest ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
-          docker push ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
+          docker build -t angular-devjobs-public-repository .
+          docker tag angular-devjobs-public-repository:latest public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:latest
+          docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:latest
