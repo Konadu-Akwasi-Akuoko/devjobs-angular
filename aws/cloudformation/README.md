@@ -1,6 +1,6 @@
 # CI/CD
 
-TO use this CI/CD pipeline you need to have an AWS account and a github account. Then you need to run the cloudformation templates in this directory to create the necessary resources in your AWS account. Here are the steps to follow:
+TO use this CI/CD pipeline you need to have an AWS account and a github account. Then you need to run the cloudformation templates in this directory to create the necessary resources in your AWS account. Note that if you don't follow the steps below it will probably not work for you, so here are the steps to follow:
 
 1. Run the [github-actions-oidc-federation-and-role.yaml](./github-actions-oidc-federation-and-role.yaml) cloudformation template to create the necessary resources in your AWS account. This template creates an OIDC identity provider and a role that can be assumed by the github actions runner. We are only allowing this github actions runner to assume the role, that it can use to deploy docker images to ECR. When running this template take note of the RoleName. Because you will need this RoleName to attach the policy to the ECR repository as a Principal that can push docker images to the ECR repository.
 
