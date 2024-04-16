@@ -1,0 +1,33 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Angular testing and build
+on:
+  push:
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test code
+
+    steps:
+      - name: git-checkout
+        uses: actions/checkout@v3
+
+      - name: pnpm-setup
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
+      - name: pnpm-install-deps
+        run: pnpm install
+
+      - name: pnpm-test-angular
+        run: pnpm run test:ci
+
+      - name: pnpm-run-build
+        run: pnpm build
