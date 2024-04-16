@@ -1,5 +1,7 @@
 # DevjobsAngular
 
+[![Angular testing and build](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/test.yaml/badge.svg)](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/test.yaml)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
 
 ## Development server
