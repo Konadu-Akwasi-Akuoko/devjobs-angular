@@ -7,8 +7,6 @@ on:
 
 env:
   AWS_DEFAULT_REGION: us-east-1
-  ECR_REGISTRY: public.ecr.aws/s1p6w2l2
-  DOCKER_TAG_NAME: devjobs-angular
 
 jobs:
   build:
@@ -34,10 +32,15 @@ jobs:
           registry-type: public
 
       - name: Build, tag, and push image to Amazon ECR Public
+        id: build-image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t ${{env.DOCKER_TAG_NAME}} .
-          docker tag ${{env.DOCKER_TAG_NAME}}:latest ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
-          docker push ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
+          docker build -t angular-devjobs-public-repository .
+          docker tag angular-devjobs-public-repository:$IMAGE_TAG public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:$IMAGE_TAG
+          docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:$IMAGE_TAG
+          echo "::set-output name=image::public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:$IMAGE_TAG"
       - name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition devjobs-task-definition --query taskDefinition > task-definition.json --region us-east-1
+          ls -a
