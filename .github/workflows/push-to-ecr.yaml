@@ -41,3 +41,4 @@ jobs:
       - name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition devjobs-task-definition --query taskDefinition > task-definition.json --region us-east-1
+          ls -a
