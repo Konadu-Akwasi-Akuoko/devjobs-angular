@@ -1,6 +1,6 @@
 # DevjobsAngular
 
-[![Angular testing and build](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/test.yaml/badge.svg)](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/test.yaml) [![Deployment](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/push-to-ecr.yaml/badge.svg)](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/push-to-ecr.yaml)
+[![Angular testing and build](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/test.yaml/badge.svg)](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/test.yaml) [![Deployment](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/push-to-ecr.yaml/badge.svg)](https://github.com/Konadu-Akwasi-Akuoko/devjobs-angular/actions/workflows/push-to-ecr.yaml) [![codecov](https://codecov.io/gh/Konadu-Akwasi-Akuoko/devjobs-angular/graph/badge.svg?token=66DO4QF5HV)](https://codecov.io/gh/Konadu-Akwasi-Akuoko/devjobs-angular)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
 
