@@ -87,37 +87,3 @@ jobs:
           service: devjobs-service
           cluster: devjobs-ecs-cluster
           wait-for-service-stability: true
-
-  update-deployment-status:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Create Deployment
-        id: deployment
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const { data: deployment } = await github.rest.repos.createDeployment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha,
-              required_contexts: [],
-            });
-            return deployment.id;
-          result-encoding: string
-
-      - name: Update Deployment Status
-        id: deployment-status
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const deploymentId = "${{ steps.deployment.outputs.result }}";
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deploymentId,
-              state: "success", // or "failure" based on your workflow outcome
-            });
