@@ -66,8 +66,8 @@ Resources:
                 token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrganization}/${RepositoryName}:ref:refs/heads/${BranchName}
       ManagedPolicyArns:
         ## edit the managed policy to give least privileges
-        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
-
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonElasticContainerRegistryPublicFullAccess
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonECS_FullAccess
 Outputs:
   IdpGitHubOidc:
     Condition: CreateProvider

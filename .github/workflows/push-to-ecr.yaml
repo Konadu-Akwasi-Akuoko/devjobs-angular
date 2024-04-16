@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Deployment
 
 on:
   push:
@@ -7,11 +7,9 @@ on:
 
 env:
   AWS_DEFAULT_REGION: us-east-1
-  ECR_REGISTRY: public.ecr.aws/s1p6w2l2
-  DOCKER_TAG_NAME: devjobs-angular
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -20,6 +18,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: pnpm-setup
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
+      - name: pnpm-install-deps
+        run: pnpm install
+
+      - name: pnpm-test-angular
+        run: pnpm run test:ci
+
+      - name: pnpm-run-build
+        run: pnpm build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -34,7 +58,32 @@ jobs:
           registry-type: public
 
       - name: Build, tag, and push image to Amazon ECR Public
+        id: build-image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t ${{env.DOCKER_TAG_NAME}} .
-          docker tag ${{env.DOCKER_TAG_NAME}}:latest ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
-          docker push ${{env.ECR_REGISTRY}}/${{env.DOCKER_TAG_NAME}}:${{ github.sha }}
+          docker build -t angular-devjobs-public-repository:${IMAGE_TAG} .
+          docker tag angular-devjobs-public-repository:${IMAGE_TAG} public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
+          docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
+          echo "image=public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}" >> $GITHUB_OUTPUT
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition devjobs-task-definition --query taskDefinition > task-definition.json --region us-east-1
+          ls -a
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: devjobs
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: devjobs-service
+          cluster: devjobs-ecs-cluster
+          wait-for-service-stability: true
