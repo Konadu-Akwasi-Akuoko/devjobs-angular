@@ -37,3 +37,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           clover-file: ./coverage/clover.xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: Konadu-Akwasi-Akuoko/devjobs-angular
