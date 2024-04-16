@@ -6,16 +6,6 @@ TO use this CI/CD pipeline you need to have an AWS account and a github account.
 
 2. Run the [create-ecr.yaml](./create-ecr.yaml) cloudformation template to create the necessary resources in your AWS account. This template creates an ECR repository that can be used to store docker images. The template also creates a policy that allows the github actions runner to push docker images to the ECR repository. The policy is attached to the ECR repository.
 
-After you have created the repo, go into your ECR repo and copy the URI of the repo. You will need this URI to push docker images to the repo.
+    After you have created the repo, go into your ECR repo and copy the URI of the repo. You will need this URI to push docker images to the repo.
 
-- You can find the URI in the `View push commands` section of the ECR repo. Specifically you will need the commands in bullet point 2, 3 and 4. Copy these commands and replace them in the[github actions workflow file](../../.github/workflows/push-to-ecr.yaml) (Line 38 to 40).
-- Or better yet if you look at the top of the top of the github actions file you will see the following lines:
-
-```yaml
-env:
-  AWS_DEFAULT_REGION: us-east-1
-  ECR_REGISTRY: public.ecr.aws/s1p6w2l2
-  DOCKER_TAG_NAME: devjobs-angular
-```
-
-Replace the `ECR_REGISTRY` value with the URI of your ECR repo. The URI is in the format `public.ecr.aws/<registry-id>`. You can find the URI in the `View push commands` section of the ECR repo. And you can replace the `DOCKER_TAG_NAME` with any name you want to tag your docker image.
+    - You can find the URI in the `View push commands` section of the ECR repo. Specifically you will need the commands in bullet point 2, 3 and 4. Copy these commands and replace them in the[github actions workflow file](../../.github/workflows/push-to-ecr.yaml) (Line 38 to 40).
