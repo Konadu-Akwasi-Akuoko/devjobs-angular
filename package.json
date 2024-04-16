@@ -9,7 +9,7 @@
     "test": "jest --verbose",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "test:cicd": "jest --ci --coverage",
+    "test:ci": "jest --ci --coverage",
     "serve:ssr:devjobs-angular": "node dist/devjobs-angular/server/server.mjs"
   },
   "private": true,

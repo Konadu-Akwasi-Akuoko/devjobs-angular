@@ -22,7 +22,7 @@ jobs:
       - name: pnpm-setup
         uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 6
 
       - name: pnpm-install-deps
         run: pnpm install
