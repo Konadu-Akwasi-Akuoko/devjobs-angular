@@ -9,3 +9,7 @@ TO use this CI/CD pipeline you need to have an AWS account and a github account.
     After you have created the repo, go into your ECR repo and copy the URI of the repo. You will need this URI to push docker images to the repo.
 
     - You can find the URI in the `View push commands` section of the ECR repo. Specifically you will need the commands in bullet point 2, 3 and 4. Copy these commands and replace them in the[github actions workflow file](../../.github/workflows/push-to-ecr.yaml) (Line 38 to 40).
+
+3. After creating the above resources, you need to create an ECS cluster and a task definition. In the task definition you can specify the image we build in the [push-to-ecr.yaml](../../.github/workflows/push-to-ecr.yaml) workflow file.
+
+4. I choose to use dynamic port mapping for the ecs service, so I also created an Application Load Balancer and a target group. The target group is used to route traffic to the ecs service.
