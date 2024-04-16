@@ -36,10 +36,10 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t angular-devjobs-public-repository .
+          docker build -t angular-devjobs-public-repository:${IMAGE_TAG} .
           docker tag angular-devjobs-public-repository:${IMAGE_TAG} public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
           docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
-          echo "::set-output name=image::public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}"
+          
       - name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition devjobs-task-definition --query taskDefinition > task-definition.json --region us-east-1
