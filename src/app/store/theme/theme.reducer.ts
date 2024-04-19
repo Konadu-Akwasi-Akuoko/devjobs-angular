@@ -1,17 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
-import { setTheme } from '../state/theme.action';
+import { setTheme } from './theme.action';
 
-export interface Theme {
+export interface ITheme {
   theme: 'light' | 'dark';
 }
 
-export const initialState: Theme = {
+export const initialState: ITheme = {
   theme: 'light',
 };
 
 export const themeReducer = createReducer(
   initialState,
-  on(setTheme, (state: Theme, props) => ({
+  on(setTheme, (state: ITheme, props) => ({
     ...state,
     theme: props.theme,
   }))
