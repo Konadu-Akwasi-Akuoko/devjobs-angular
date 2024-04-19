@@ -14,7 +14,6 @@ import { setTheme } from './store/theme/theme.action';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'devjobs-angular';
   theme: 'light' | 'dark' = 'light';
 
   theme$: Observable<ITheme>;
@@ -29,6 +28,18 @@ export class AppComponent implements OnInit, OnDestroy {
     this.themeSubscription = this.theme$.subscribe((theme) => {
       this.theme = theme.theme;
     });
+
+    // Check for theme in local storage, otherwise check for system theme
+    const theme = localStorage.getItem('theme');
+    if (theme) {
+      this.store.dispatch(setTheme({ theme: theme as 'light' | 'dark' }));
+    } else {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        this.store.dispatch(setTheme({ theme: 'dark' }));
+      } else {
+        this.store.dispatch(setTheme({ theme: 'light' }));
+      }
+    }
   }
 
   ngOnDestroy(): void {
