@@ -5,7 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { themeReducer } from './store/theme';
+import { themeReducer } from './store/theme/theme.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
