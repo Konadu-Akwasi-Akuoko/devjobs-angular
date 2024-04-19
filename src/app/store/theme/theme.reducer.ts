@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setTheme } from '../state/theme.action';
+import { setTheme } from './theme.action';
 
 export interface Theme {
   theme: 'light' | 'dark';
