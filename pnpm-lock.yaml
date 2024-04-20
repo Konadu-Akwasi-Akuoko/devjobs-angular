@@ -50,6 +50,9 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.19.2
+  ngrx-immer:
+    specifier: ^2.2.0
+    version: 2.2.0(@ngrx/store@17.2.0)(immer@10.0.4)
   rxjs:
     specifier: ~7.8.0
     version: 7.8.1
@@ -5313,6 +5316,10 @@ packages:
     dev: true
     optional: true
 
+  /immer@10.0.4:
+    resolution: {integrity: sha512-cuBuGK40P/sk5IzWa9QPUaAdvPHjkk1c+xYsd9oZw+YQQEV+10G0P5uMpGctZZKnyQ+ibRO08bD25nWLmYi2pw==}
+    dev: false
+
   /immutable@4.3.5:
     resolution: {integrity: sha512-8eabxkth9gZatlwl5TBuJnCsoTADlL6ftEr7A4qgdaTsPyreilDSnUk57SO+jfKcNtxPa22U5KK6DSeAYhpBJw==}
     dev: true
@@ -6612,6 +6619,26 @@ packages:
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
+
+  /ngrx-immer@2.2.0(@ngrx/store@17.2.0)(immer@10.0.4):
+    resolution: {integrity: sha512-3y8UV6clvO8lGLS32gOk/dG2D4xBnu88Z4r0fenW7YH8PmAhGC/g4mH2/3nqkemHaf1WejVo+Vx5yX1rQxPCLg==}
+    peerDependencies:
+      '@ngrx/component-store': '>=13.0.0'
+      '@ngrx/signals': '>=17.1.1'
+      '@ngrx/store': '>=13.0.0'
+      immer: '>=7.0.0'
+    peerDependenciesMeta:
+      '@ngrx/component-store':
+        optional: true
+      '@ngrx/signals':
+        optional: true
+      '@ngrx/store':
+        optional: true
+    dependencies:
+      '@ngrx/store': 17.2.0(@angular/core@17.3.4)(rxjs@7.8.1)
+      immer: 10.0.4
+      tslib: 2.6.2
+    dev: false
 
   /nice-napi@1.0.2:
     resolution: {integrity: sha512-px/KnJAJZf5RuBGcfD+Sp2pAKq0ytz8j+1NehvgIGFkvtvFrDM3T8E4x/JJODXK9WZow8RRGrbA9QQ3hs+pDhA==}

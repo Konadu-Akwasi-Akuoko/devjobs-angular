@@ -1,4 +1,3 @@
-import { createFeatureSelector } from '@ngrx/store';
-import { ITheme } from './theme.reducer';
+import { AppState } from '../store';
 
-export const selectTheme = createFeatureSelector<Readonly<ITheme>>('theme');
+export const selectTheme = (state: AppState) => state.theme;
