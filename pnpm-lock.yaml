@@ -50,6 +50,9 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.19.2
+  immer:
+    specifier: ^10.0.4
+    version: 10.0.4
   ngrx-immer:
     specifier: ^2.2.0
     version: 2.2.0(@ngrx/store@17.2.0)(immer@10.0.4)
