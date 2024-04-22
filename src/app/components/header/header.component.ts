@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   theme$: Observable<ITheme>;
   theme!: 'light' | 'dark';
   themeSubscription!: Subscription;
+
   constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
   }

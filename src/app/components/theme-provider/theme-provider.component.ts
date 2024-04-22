@@ -24,10 +24,7 @@ import { AsyncPipe } from '@angular/common';
 export class ThemeProviderComponent {
   theme$: Observable<ITheme>;
 
-  constructor(
-    private store: Store<AppState>,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
+  constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
 
     afterNextRender(
