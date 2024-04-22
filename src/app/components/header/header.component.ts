@@ -24,25 +24,19 @@ import { selectTheme } from '../../store/theme/theme.selectors';
 export class HeaderComponent implements OnInit, OnDestroy {
   theme$: Observable<ITheme>;
   theme!: 'light' | 'dark';
-  themeSubscription!: Subscription;
 
   constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
   }
 
-  ngOnInit(): void {
-    this.themeSubscription = this.theme$.subscribe((theme) => {
-      this.theme = theme.currentTheme;
-    });
-  }
+  ngOnInit(): void {}
 
   onToggleThemeClick() {
     const newTheme = this.theme === 'light' ? 'dark' : 'light';
     this.store.dispatch(setTheme({ theme: newTheme }));
+    this.theme = newTheme;
     localStorage.setItem('theme', newTheme);
   }
 
-  ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }
