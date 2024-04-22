@@ -1,6 +1,7 @@
 import {
   afterNextRender,
   AfterRenderPhase,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
@@ -18,6 +19,7 @@ import { AsyncPipe } from '@angular/common';
   imports: [AsyncPipe],
   templateUrl: './theme-provider.component.html',
   styleUrl: './theme-provider.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeProviderComponent {
   theme$: Observable<ITheme>;
@@ -41,9 +43,6 @@ export class ThemeProviderComponent {
             this.store.dispatch(setTheme({ theme: 'light' }));
           }
         }
-        // Manually trigger change detection because the afterNextRender function
-        // happens outside of the normal Angular change detection cycle
-        changeDetectorRef.detectChanges();
       },
       { phase: AfterRenderPhase.Write }
     );

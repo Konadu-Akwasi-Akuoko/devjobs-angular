@@ -1,5 +1,10 @@
-import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -11,25 +16,22 @@ import { selectTheme } from '../../store/theme/theme.selectors';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, AsyncPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   theme$: Observable<ITheme>;
   theme!: 'light' | 'dark';
   themeSubscription!: Subscription;
-  constructor(
-    private store: Store<AppState>,
-    private changeDetector: ChangeDetectorRef
-  ) {
+  constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
   }
 
   ngOnInit(): void {
     this.themeSubscription = this.theme$.subscribe((theme) => {
       this.theme = theme.currentTheme;
-      this.changeDetector.detectChanges();
     });
   }
 

@@ -20,7 +20,7 @@
     >
       <div
         [ngClass]="
-          theme === 'light'
+          (theme$ | async)?.currentTheme === 'light'
             ? 'h-[14px] w-[14px] rounded-full bg-primary-violet transition-[margin] hover:bg-primary-light-violet'
             : 'theme-dark h-[14px] w-[14px] rounded-full bg-primary-violet transition-[margin] hover:bg-primary-light-violet'
         "
