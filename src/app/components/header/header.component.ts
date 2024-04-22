@@ -1,12 +1,12 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/store';
 import { Observable, Subscription } from 'rxjs';
+import { AppState } from '../../store/store';
+import { setTheme } from '../../store/theme/theme.action';
 import { ITheme } from '../../store/theme/theme.reducer';
 import { selectTheme } from '../../store/theme/theme.selectors';
-import { AsyncPipe, NgClass } from '@angular/common';
-import { setTheme } from '../../store/theme/theme.action';
 
 @Component({
   selector: 'app-header',
