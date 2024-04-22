@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { setTheme } from '../../store/theme/theme.action';
@@ -63,6 +62,7 @@ describe('ThemeProviderComponent', () => {
     const storeSpy = jest.spyOn(TestBed.inject(Store), 'dispatch');
     const fixture = TestBed.createComponent(ThemeProviderComponent);
     fixture.detectChanges();
+
     expect(storeSpy).toHaveBeenCalledWith(setTheme({ theme: 'dark' }));
   });
 });
