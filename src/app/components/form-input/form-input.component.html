@@ -1,18 +1,13 @@
-<div
-  [class]="
-    twMerge(
-      'flex flex-row items-center gap-x-4 rounded-[6px] bg-white px-8 dark:bg-primary-very-dark-blue',
-      class
-    )
-  "
->
-  @if (iconSrc) {
-  <img [src]="iconSrc" alt="icon" class="w-6 h-6 inline" />
-  }
-
+<div [class]="twMerge">
+  @if (iconSrc) {<img
+    [src]="iconSrc"
+    alt="icon"
+    class="w-auto max-w-6 h-6 inline"
+  />}
   <input
     [id]="name"
     [formControl]="nameFormControl"
+    [placeholder]="placeholder"
     type="text"
     class="flex-1 appearance-none py-7 text-base placeholder:text-secondary-gray focus-visible:outline-none dark:bg-primary-very-dark-blue dark:text-white"
   />

@@ -13,7 +13,8 @@ import { twMerge } from 'tailwind-merge';
 export class FormInputComponent {
   @Input({ required: true }) nameFormControl: FormControl = new FormControl('');
   @Input({ required: true }) name: string = '';
+  @Input({ required: true }) placeholder: string = '';
   @Input() iconSrc: string | null = null;
   @Input() class: ClassNameValue = '';
-  twMerge = twMerge;
+  twMerge = twMerge('flex flex-row items-center gap-x-4 rounded-[6px] bg-white px-8 dark:bg-primary-very-dark-blue', this.class);
 }
