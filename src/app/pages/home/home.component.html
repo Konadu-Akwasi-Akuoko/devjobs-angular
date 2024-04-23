@@ -1,1 +1,32 @@
-<p>home works!</p>
+<main>
+  <div
+    class="horizontal-margin -mt-10 hidden flex-row rounded-md bg-secondary-white dark:bg-primary-very-dark-blue sm:flex"
+  >
+    <app-form-input
+      [nameFormControl]="companyFormControl"
+      [name]="companyName"
+      [iconSrc]="companyIconSrc"
+      class="sm:w-3/12 xl:w-[40%]"
+    />
+    <app-form-input
+      [nameFormControl]="locationFormControl"
+      [name]="locationName"
+      [iconSrc]="locationIconSrc"
+      class="sm:w-3/12 xl:w-[40%]"
+    />
+
+    <div
+      class="flex flex-row content-center items-center justify-center gap-8 sm:w-6/12 xl:w-[30%]"
+    >
+      <!-- Checkbox -->
+      <!-- Button -->
+    </div>
+  </div>
+
+  <h2>
+    {{ companyFormControl.value }}
+  </h2>
+  <h3>
+    {{ locationFormControl.value }}
+  </h3>
+</main>
