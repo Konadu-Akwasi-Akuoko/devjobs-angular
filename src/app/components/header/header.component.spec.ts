@@ -1,16 +1,13 @@
 import {
   ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
+  TestBed
 } from '@angular/core/testing';
 
-import { HeaderComponent } from './header.component';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { provideRouter } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { setTheme } from '../../store/theme/theme.action';
+import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
