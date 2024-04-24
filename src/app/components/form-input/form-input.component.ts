@@ -11,8 +11,8 @@ import { twMerge } from 'tailwind-merge';
   styleUrl: './form-input.component.css',
 })
 export class FormInputComponent {
-  @Input({ required: true }) nameFormControl: FormControl = new FormControl('');
-  @Input({ required: true }) name: string = '';
+  @Input({ required: true }) inputFormControl: FormControl = new FormControl('');
+  @Input({ required: true }) inputName: string = '';
   @Input({ required: true }) placeholder: string = '';
   @Input() iconSrc: string | null = null;
   @Input() class: ClassNameValue = '';

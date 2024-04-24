@@ -1,0 +1,17 @@
+<div
+  class="fixed left-0 top-0 z-50 h-screen w-screen bg-modal-bg"
+  (click)="closeModalOnParentClick()"
+  (keyup.enter)="closeModalOnParentClick()"
+  role="button"
+  tabindex="0"
+>
+  <div
+    class="horizontal-margin mt-[35vh] overflow-hidden rounded-md bg-white dark:bg-primary-very-dark-blue"
+    (click)="$event.stopPropagation()"
+    (keyup.enter)="$event.stopPropagation()"
+    tabindex="0"
+    role="button"
+  >
+    <ng-content></ng-content>
+  </div>
+</div>

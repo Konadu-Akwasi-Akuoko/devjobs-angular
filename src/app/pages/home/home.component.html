@@ -4,15 +4,15 @@
     class="horizontal-margin -mt-10 hidden flex-row rounded-md bg-secondary-white dark:bg-primary-very-dark-blue sm:flex"
   >
     <app-form-input
-      [nameFormControl]="companyFormControl"
-      [name]="companyName"
+      [inputFormControl]="companyFormControl"
+      [inputName]="companyName"
       [iconSrc]="companyIconSrc"
       placeholder="Filter by companies…"
       class="sm:w-3/12 xl:w-[40%]"
     />
     <app-form-input
-      [nameFormControl]="locationFormControl"
-      [name]="locationName"
+      [inputFormControl]="locationFormControl"
+      [inputName]="locationName"
       [iconSrc]="locationIconSrc"
       placeholder="Filter by location…"
       class="sm:w-3/12 xl:w-[40%]"
@@ -22,7 +22,6 @@
       class="flex flex-row content-center items-center justify-center gap-8 sm:w-6/12 xl:w-[30%]"
     >
       <app-checkbox
-        [value]="false"
         label="Full Time Only"
         [checkBoxFormControl]="checkBoxFormControl"
       />
@@ -35,16 +34,20 @@
     class="horizontal-margin relative -mt-10 flex flex-row items-center justify-between rounded-md bg-secondary-white dark:bg-primary-very-dark-blue sm:hidden"
   >
     <app-form-input
-      [nameFormControl]="companyFormControl"
-      [name]="companyName"
+      [inputFormControl]="companyFormControl"
+      [inputName]="companyName"
       class="w-[60%]"
       placeholder="Filter by companies…"
       value="{company}"
     />
 
     <div class="flex flex-row items-center gap-4">
-
-      <!-- <FilterButton /> -->
+      <app-filter-button
+        [checkBoxFormControl]="checkBoxFormControl"
+        [locationFormControl]="locationFormControl"
+        [locationName]="locationName"
+        [locationIconSrc]="locationIconSrc"
+      />
 
       <div class="mr-4">
         <button
@@ -62,4 +65,9 @@
       </div>
     </div>
   </div>
+
+  <h1>{{ companyFormControl.value }}</h1>
+  <h2>{{ locationFormControl.value }}</h2>
+  <h3>{{ checkBoxFormControl.value }}</h3>
+
 </main>

@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { FormInputComponent } from '../../components/form-input/form-input.component';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
+import { FilterButtonComponent } from '../../components/filter-button/filter-button.component';
+import { FormInputComponent } from '../../components/form-input/form-input.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ReactiveFormsModule, FormInputComponent, CheckboxComponent],
+  imports: [
+    ReactiveFormsModule,
+    FormInputComponent,
+    CheckboxComponent,
+    FilterButtonComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
