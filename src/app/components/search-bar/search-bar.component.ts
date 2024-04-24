@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormInputComponent } from '../form-input/form-input.component';
-import { CheckboxComponent } from '../checkbox/checkbox.component';
-import { FilterButtonComponent } from '../filter-button/filter-button.component';
+
 import { debounceTime, Subscription } from 'rxjs';
+import { CheckboxComponent } from '../checkbox/checkbox.component';
+import { FormInputComponent } from '../form-input/form-input.component';
+import { FilterButtonComponent } from '../filter-button/filter-button.component';
 
 @Component({
   selector: 'app-search-bar',
