@@ -19,7 +19,9 @@ export const initialState: IJobsData = {
 
 export const jobsReducer = createReducer(
   initialState,
-  immerOn(setInitialJobsData),
+  immerOn(setInitialJobsData, (state: IJobsData) => {
+    state.jobsLoadingState = 'LOADING';
+  }),
   immerOn(setJobsData, (state: IJobsData, props) => {
     state.jobs = props.jobs;
   }),
