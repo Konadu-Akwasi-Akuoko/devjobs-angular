@@ -1,17 +1,16 @@
+import { AsyncPipe } from '@angular/common';
 import {
   afterNextRender,
   AfterRenderPhase,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
+  Component
 } from '@angular/core';
-import { selectTheme } from '../../store/theme/theme.selectors';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store/store';
 import { Observable } from 'rxjs';
-import { ITheme } from '../../store/theme/theme.reducer';
+import { AppState } from '../../store/store';
 import { setTheme } from '../../store/theme/theme.action';
-import { AsyncPipe } from '@angular/common';
+import { ITheme } from '../../store/theme/theme.reducer';
+import { selectTheme } from '../../store/theme/theme.selectors';
 
 @Component({
   selector: 'app-theme-provider',
