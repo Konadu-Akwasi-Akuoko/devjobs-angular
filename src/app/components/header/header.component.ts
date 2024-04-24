@@ -1,10 +1,5 @@
 import { AsyncPipe, NgClass } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -12,6 +7,7 @@ import { AppState } from '../../store/store';
 import { setTheme } from '../../store/theme/theme.action';
 import { ITheme } from '../../store/theme/theme.reducer';
 import { selectTheme } from '../../store/theme/theme.selectors';
+import { setInitialJobsData } from '../../store/jobs/jobs.action';
 
 @Component({
   selector: 'app-header',
@@ -21,15 +17,14 @@ import { selectTheme } from '../../store/theme/theme.selectors';
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
   theme$: Observable<ITheme>;
   theme!: 'light' | 'dark';
 
   constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
+    store.dispatch(setInitialJobsData());
   }
-
-  ngOnInit(): void {}
 
   onToggleThemeClick() {
     const newTheme = this.theme === 'light' ? 'dark' : 'light';
@@ -37,6 +32,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.theme = newTheme;
     localStorage.setItem('theme', newTheme);
   }
-
-  ngOnDestroy(): void {}
 }

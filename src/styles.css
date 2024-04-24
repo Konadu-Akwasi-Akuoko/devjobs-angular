@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply transition-colors duration-300 ease-in-out;
-}
-
 @layer base {
   :root {
     --modal-bg: rgb(0, 0, 0, 0.2);
@@ -14,7 +10,7 @@
 }
 
 * {
-  @apply text-primary-midnight;
+  @apply transition-colors duration-300 ease-in-out text-primary-midnight;
 }
 
 h1 {
