@@ -1,0 +1,10 @@
+<div
+  class="horizontal-padding mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3"
+>
+  @for (job of (jobsData | async)?.jobs; track job.id) {
+  <app-job-card [props]="job" />
+  }
+</div>
+<div class="mt-14 flex w-full justify-center pb-28">
+  <button class="button1">Load More</button>
+</div>
