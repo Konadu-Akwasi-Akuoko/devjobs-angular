@@ -1,7 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { provideRouter } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -12,7 +9,7 @@ import { HeaderComponent } from './header.component';
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let store: MockStore;
+  // let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
