@@ -1,0 +1,34 @@
+<div class="flex items-center gap-4">
+  <div class="relative">
+    <input
+      type="checkbox"
+      class="peer h-6 w-6 opacity-0 absolute top-0 left-0 z-30 cursor-pointer"
+      [formControl]="checkBoxFormControl"
+    />
+    <span
+      class="flex opacity-0 peer-checked:opacity-100 h-6 w-6 cursor-pointer rounded bg-secondary-light-gray peer-checked:bg-primary-violet text-center text-xl text-white hover:bg-primary-light-violet peer-checked:hover:bg-primary-violet items-center justify-center transition-opacity duration-500 ease-in-out absolute top-0 left-0"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#F4F6F8"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-check"
+      >
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </span>
+    <span
+      class="flex opacity-100 peer-checked:opacity-0 h-6 w-6 cursor-pointer rounded bg-secondary-light-gray peer-checked:bg-primary-violet text-center text-xl text-white hover:bg-primary-light-violet peer-checked:hover:bg-primary-violet items-center justify-center transition-opacity duration-500 ease-in-out absolute top-0 left-0"
+    >
+    </span>
+    <span class="flex opacity-0 h-6 w-6"> </span>
+  </div>
+
+  <p class="text-base font-bold dark:text-secondary-white">{{ label }}</p>
+</div>

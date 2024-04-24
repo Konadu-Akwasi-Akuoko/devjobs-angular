@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppState } from '../../store/store';
 import { setTheme } from '../../store/theme/theme.action';
 import { ITheme } from '../../store/theme/theme.reducer';
