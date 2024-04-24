@@ -20,24 +20,12 @@
     <div
       class="flex flex-row content-center items-center justify-center gap-8 sm:w-6/12 xl:w-[30%]"
     >
-      <!-- Checkbox -->
       <app-checkbox
         [value]="false"
         label="Full Time Only"
         [checkBoxFormControl]="checkBoxFormControl"
       />
-      <!-- Button -->
       <button class="button1">Search</button>
     </div>
   </div>
-
-  <h2>
-    {{ companyFormControl.value }}
-  </h2>
-  <h3>
-    {{ locationFormControl.value }}
-  </h3>
-  <h4>
-    {{ checkBoxFormControl.value }}
-  </h4>
 </main>
