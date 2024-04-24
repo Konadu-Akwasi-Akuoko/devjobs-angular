@@ -7,19 +7,21 @@ import {
   setJobsData,
   setJobsLoadingState,
 } from './jobs.action';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store';
 
 // Simulate an effect of fetching data from an API
 @Injectable({
   providedIn: 'root',
 })
 export class JobsEffectsService {
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private store: Store<AppState>) {}
 
   loadJobsData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(setInitialJobsData),
       exhaustMap(() => {
-        setJobsLoadingState({ state: 'LOADING' });
+        this.store.dispatch(setJobsLoadingState({ state: 'LOADING' }));
         return of(data).pipe(
           concatMap((data) => [
             setJobsData({ jobs: data }),
