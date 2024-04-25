@@ -1,0 +1,32 @@
+<div
+  class="mt-5 flex flex-col items-center justify-between sm:mt-0 sm:flex-row"
+>
+  <div class="mb-[50px] flex flex-col gap-2 sm:mb-0">
+    <div class="flex flex-row gap-3">
+      <p class="text-secondary-dark-gray">
+        {{ postedAt }}
+      </p>
+      <p class="-mt-3 text-3xl text-secondary-dark-gray">.</p>
+      <p class="text-secondary-dark-gray">
+        {{ contract }}
+      </p>
+    </div>
+    <div>
+      <h2
+        class="text-[28px] font-bold text-primary-very-dark-blue dark:text-white"
+      >
+        {{ position }}
+      </h2>
+    </div>
+    <div>
+      <p class="text-sm font-bold text-primary-violet">
+        {{ location }}
+      </p>
+    </div>
+  </div>
+  <div class="w-full sm:w-fit">
+    <button class="button1 w-full sm:w-fit">
+      <a href="{{ applyUrl }}" target="_blank"> Apply Now </a>
+    </button>
+  </div>
+</div>

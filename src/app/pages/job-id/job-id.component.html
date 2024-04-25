@@ -1,0 +1,38 @@
+<main>
+  @switch ((activeDataLoadingState$ | async)) { @case ("SUCCESS") {
+  <section class="horizontal-padding">
+    <app-job-id-header
+      [logoBackground]="(activeData$ | async)?.logoBackground!"
+      [logoSrc]="(activeData$ | async)?.logo!"
+      [companyName]="(activeData$ | async)?.company!"
+      [companyWebsiteURL]="(activeData$ | async)?.website!"
+    />
+
+    <div
+      className="mt-8 rounded-md bg-white p-6 dark:bg-primary-very-dark-blue sm:p-12"
+    >
+      <app-position-and-apply
+        [postedAt]="(activeData$ | async)?.postedAt!"
+        [contract]="(activeData$ | async)?.contract!"
+        [position]="(activeData$ | async)?.position!"
+        [location]="(activeData$ | async)?.location!"
+        [applyUrl]="(activeData$ | async)?.apply!"
+      />
+      <app-description [description]="(activeData$ | async)?.description!" />
+      <app-requirements [requirements]="(activeData$ | async)?.requirements!" />
+      <app-what-will-you-do [roles]="(activeData$ | async)?.role!" />
+    </div>
+  </section>
+  <app-footer
+    [position]="(activeData$ | async)?.position!"
+    [company]="(activeData$ | async)?.company!"
+    [applyUrl]="(activeData$ | async)?.apply!"
+  />
+  } @case ("ERROR") {
+  <app-error
+    errorMessage="Oops, the page you are looking for doesn't exist"
+    buttonMessage="Let's Take You Home"
+    buttonLink="/"
+  />
+  } }
+</main>
