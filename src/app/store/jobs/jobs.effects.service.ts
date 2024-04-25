@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, filter, map, of } from 'rxjs';
 import data from '../../../lib/data/data.json';
-import { AppState } from '../store';
 import {
   setActiveJobData,
   setActiveJobLoadingState,
@@ -18,7 +16,7 @@ import {
   providedIn: 'root',
 })
 export class JobsEffectsService {
-  constructor(private actions$: Actions, private store: Store<AppState>) {}
+  constructor(private actions$: Actions) {}
 
   loadJobsData$ = createEffect(() => {
     return this.actions$.pipe(
@@ -44,6 +42,8 @@ export class JobsEffectsService {
     return this.actions$.pipe(
       ofType(setActiveJobState),
       exhaustMap((state) => {
+        if (data[state.id - 1] === undefined)
+          return of(setActiveJobLoadingState({ state: 'ERROR' }));
         return of(data[state.id - 1]).pipe(
           map((data) => setActiveJobData({ data: data })),
           catchError(() => of(setActiveJobLoadingState({ state: 'ERROR' })))
@@ -52,7 +52,10 @@ export class JobsEffectsService {
     );
   });
 
-  // setActiveJobDataState$ = createEffect(() => {
-  //   return this.actions$.pipe(ofType(setActiveJobData));
-  // });
+  setActiveJobDataState$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(setActiveJobData),
+      exhaustMap(() => of(setActiveJobLoadingState({ state: 'SUCCESS' })))
+    );
+  });
 }

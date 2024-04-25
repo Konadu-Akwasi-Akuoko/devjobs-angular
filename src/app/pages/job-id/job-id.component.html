@@ -1,4 +1,5 @@
 <main>
+  @switch ((activeDataLoadingState$ | async)) { @case ("SUCCESS") {
   <section class="horizontal-padding">
     <app-job-id-header
       [logoBackground]="(activeData$ | async)?.logoBackground!"
@@ -27,4 +28,11 @@
     [company]="(activeData$ | async)?.company!"
     [applyUrl]="(activeData$ | async)?.apply!"
   />
+  } @case ("ERROR") {
+  <app-error
+    errorMessage="Oops, the page you are looking for doesn't exist"
+    buttonMessage="Let's Take You Home"
+    buttonLink="/"
+  />
+  } }
 </main>
