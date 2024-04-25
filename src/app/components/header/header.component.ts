@@ -1,13 +1,19 @@
 import { AsyncPipe, NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { loadJobs } from '../../store/jobs/jobs.action';
+import { selectJobsData } from '../../store/jobs/jobs.selector';
 import { AppState } from '../../store/store';
 import { setTheme } from '../../store/theme/theme.action';
 import { ITheme } from '../../store/theme/theme.reducer';
 import { selectTheme } from '../../store/theme/theme.selectors';
-import { setInitialJobsData } from '../../store/jobs/jobs.action';
 
 @Component({
   selector: 'app-header',
@@ -17,13 +23,31 @@ import { setInitialJobsData } from '../../store/jobs/jobs.action';
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   theme$: Observable<ITheme>;
   theme!: 'light' | 'dark';
+  jobsDataSubscription!: Subscription;
+  jobsData$ = this.store.select(selectJobsData);
+  currentJobs?: number;
 
   constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
-    store.dispatch(setInitialJobsData());
+    store.dispatch(
+      loadJobs({
+        numberOfCurrentJobs: this.currentJobs || 0,
+      })
+    );
+  }
+
+  ngOnInit(): void {
+    this.jobsDataSubscription = this.jobsData$.subscribe((data) => {
+      this.currentJobs = data.jobs.length;
+      console.log(this.currentJobs);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.jobsDataSubscription.unsubscribe();
   }
 
   onToggleThemeClick() {

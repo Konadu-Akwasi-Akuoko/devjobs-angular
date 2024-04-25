@@ -6,7 +6,7 @@ import {
   setActiveJobLoadingState,
   setActiveJobState,
   setFilteredJobs,
-  setInitialJobsData,
+  loadJobs,
   setJobsData,
   setJobsLoadingState,
 } from './jobs.action';
@@ -18,6 +18,8 @@ export interface IJobsData {
   activeJobData: allJobDataType | null;
   activeJobLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
   activeJobId: number;
+  numberOfCurrentJobs: number;
+  canLoadNextData: boolean;
 }
 
 export const initialState: IJobsData = {
@@ -27,12 +29,15 @@ export const initialState: IJobsData = {
   activeJobData: null,
   activeJobLoadingState: '',
   activeJobId: 0,
+  numberOfCurrentJobs: 0,
+  canLoadNextData: false,
 };
 
 export const jobsReducer = createReducer(
   initialState,
-  immerOn(setInitialJobsData, (state: IJobsData) => {
+  immerOn(loadJobs, (state: IJobsData, props) => {
     state.jobsLoadingState = 'LOADING';
+    state.numberOfCurrentJobs = props.numberOfCurrentJobs;
   }),
   immerOn(setJobsData, (state: IJobsData, props) => {
     state.jobs = props.jobs;
@@ -40,6 +45,7 @@ export const jobsReducer = createReducer(
   }),
   immerOn(setJobsLoadingState, (state: IJobsData, props) => {
     state.jobsLoadingState = props.state;
+    state.canLoadNextData = props.canLoadNext;
   }),
   immerOn(setFilteredJobs, (state: IJobsData, props) => {
     const userLocation = props.location?.toLowerCase();
