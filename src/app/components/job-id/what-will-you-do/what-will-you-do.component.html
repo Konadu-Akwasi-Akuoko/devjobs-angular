@@ -1,1 +1,14 @@
-<p>what-will-you-do works!</p>
+<div class="mt-10">
+  <h2 class="text-xl font-bold dark:text-white">What You Will Do</h2>
+  <p class="mt-7 text-secondary-dark-gray">
+    {{ roles.content }}
+  </p>
+  <ul class="mb-4 mt-8 sm:mb-0 sm:mt-6">
+    @for (role of roles.items; track $index) {
+    <li class="mt-2 flex flex-row items-start gap-8 text-secondary-dark-gray">
+      <span class="text-base text-primary-violet"> {{ $index + 1 }} </span>
+      {{ role }}
+    </li>
+    }
+  </ul>
+</div>

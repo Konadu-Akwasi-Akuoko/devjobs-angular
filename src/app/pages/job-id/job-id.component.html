@@ -19,7 +19,7 @@
       />
       <app-description [description]="(activeData$ | async)?.description!" />
       <app-requirements [requirements]="(activeData$ | async)?.requirements!" />
-      <app-what-will-you-do />
+      <app-what-will-you-do [roles]="(activeData$ | async)?.role!" />
     </div>
   </section>
 </main>
