@@ -44,7 +44,7 @@ export class JobsEffectsService {
     return this.actions$.pipe(
       ofType(setActiveJobState),
       exhaustMap((state) => {
-        return of(data[state.id]).pipe(
+        return of(data[state.id - 1]).pipe(
           map((data) => setActiveJobData({ data: data })),
           catchError(() => of(setActiveJobLoadingState({ state: 'ERROR' })))
         );
