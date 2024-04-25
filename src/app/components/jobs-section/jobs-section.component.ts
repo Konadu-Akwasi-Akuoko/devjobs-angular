@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { JobCardComponent } from '../job-card/job-card.component';
-import { AppState } from '../../store/store';
-import { Store } from '@ngrx/store';
-import { selectJobsData } from '../../store/jobs/jobs.selector';
-import { Observable } from 'rxjs';
-import { IJobsData } from '../../store/jobs/jobs.reducer';
 import { AsyncPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { miniJobDataType } from '../../../lib/types/types';
+import {
+  selectFilteredJobs
+} from '../../store/jobs/jobs.selector';
+import { AppState } from '../../store/store';
+import { JobCardComponent } from '../job-card/job-card.component';
 
 @Component({
   selector: 'app-jobs-section',
@@ -15,9 +17,9 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './jobs-section.component.css',
 })
 export class JobsSectionComponent {
-  jobsData : Observable<IJobsData>;
+  jobsData: Observable<miniJobDataType[]>;
 
   constructor(private store: Store<AppState>) {
-    this.jobsData = this.store.select(selectJobsData);
+    this.jobsData = this.store.select(selectFilteredJobs);
   }
 }

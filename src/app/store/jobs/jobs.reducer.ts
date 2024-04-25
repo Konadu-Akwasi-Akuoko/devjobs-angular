@@ -5,6 +5,7 @@ import {
   setActiveJobData,
   setActiveJobLoadingState,
   setActiveJobState,
+  setFilteredJobs,
   setInitialJobsData,
   setJobsData,
   setJobsLoadingState,
@@ -12,6 +13,7 @@ import {
 
 export interface IJobsData {
   jobs: miniJobDataType[];
+  filteredJobs: miniJobDataType[];
   jobsLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
   activeJobData: allJobDataType | null;
   activeJobLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
@@ -20,6 +22,7 @@ export interface IJobsData {
 
 export const initialState: IJobsData = {
   jobs: [],
+  filteredJobs: [],
   jobsLoadingState: '',
   activeJobData: null,
   activeJobLoadingState: '',
@@ -33,9 +36,31 @@ export const jobsReducer = createReducer(
   }),
   immerOn(setJobsData, (state: IJobsData, props) => {
     state.jobs = props.jobs;
+    state.filteredJobs = props.jobs;
   }),
   immerOn(setJobsLoadingState, (state: IJobsData, props) => {
     state.jobsLoadingState = props.state;
+  }),
+  immerOn(setFilteredJobs, (state: IJobsData, props) => {
+    const userLocation = props.location?.toLowerCase();
+    const userTitleCompanyExpertise =
+      props.companyTitleExpertise?.toLowerCase();
+
+    if (
+      userLocation === '' &&
+      userTitleCompanyExpertise === '' &&
+      props.isFullTime === false
+    ) {
+      state.filteredJobs = state.jobs;
+    } else {
+      state.filteredJobs = state.jobs.filter(
+        (job) =>
+          job.location.toLowerCase().includes(userLocation!) &&
+          (job.position.toLowerCase().includes(userTitleCompanyExpertise!) ||
+            job.company.toLowerCase().includes(userTitleCompanyExpertise!)) &&
+          (props.isFullTime ? job.contract === 'Full Time' : job.contract)
+      );
+    }
   }),
   immerOn(setActiveJobState, (state: IJobsData, props) => {
     state.activeJobLoadingState = 'LOADING';

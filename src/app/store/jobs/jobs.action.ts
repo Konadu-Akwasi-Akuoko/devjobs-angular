@@ -13,6 +13,11 @@ export const setJobsLoadingState = createAction(
   props<{ state: 'LOADING' | 'SUCCESS' | 'ERROR' | '' }>()
 );
 
+export const setFilteredJobs = createAction(
+  '[Jobs] Set Filtered Jobs',
+  props<{ companyTitleExpertise?: string; isFullTime?: boolean; location?: string }>()
+);
+
 export const setActiveJobData = createAction(
   '[Job] Set Active Job Data',
   props<{ data: allJobDataType }>()
