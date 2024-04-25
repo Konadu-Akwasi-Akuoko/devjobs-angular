@@ -7,11 +7,12 @@ import { setActiveJobState } from '../../store/jobs/jobs.action';
 import { selectActiveJobData } from '../../store/jobs/jobs.selector';
 import { allJobDataType } from '../../../lib/types/types';
 import { AsyncPipe } from '@angular/common';
+import { JobIdHeaderComponent } from '../../components/job-id-header/job-id-header.component';
 
 @Component({
   selector: 'app-job-id',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, JobIdHeaderComponent],
   templateUrl: './job-id.component.html',
   styleUrl: './job-id.component.css',
 })
