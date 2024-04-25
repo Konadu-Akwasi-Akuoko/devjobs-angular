@@ -1,11 +1,25 @@
 <main>
   <section class="horizontal-padding">
-    <!-- Header -->
     <app-job-id-header
       [logoBackground]="(activeData$ | async)?.logoBackground!"
       [logoSrc]="(activeData$ | async)?.logo!"
       [companyName]="(activeData$ | async)?.company!"
       [companyWebsiteURL]="(activeData$ | async)?.website!"
     />
+
+    <div
+      className="mt-8 rounded-md bg-white p-6 dark:bg-primary-very-dark-blue sm:p-12"
+    >
+      <app-position-and-apply
+        [postedAt]="(activeData$ | async)?.postedAt!"
+        [contract]="(activeData$ | async)?.contract!"
+        [position]="(activeData$ | async)?.position!"
+        [location]="(activeData$ | async)?.location!"
+        [applyUrl]="(activeData$ | async)?.apply!"
+      />
+      <app-description />
+      <app-requirements />
+      <app-what-will-you-do />
+    </div>
   </section>
 </main>
