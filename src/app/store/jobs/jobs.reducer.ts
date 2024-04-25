@@ -1,6 +1,6 @@
 import { createReducer } from '@ngrx/store';
 import { immerOn } from 'ngrx-immer/store';
-import { allJobDataType } from '../../../lib/types/types';
+import { allJobDataType, miniJobDataType } from '../../../lib/types/types';
 import {
   setActiveJobData,
   setActiveJobLoadingState,
@@ -11,7 +11,7 @@ import {
 } from './jobs.action';
 
 export interface IJobsData {
-  jobs: allJobDataType[];
+  jobs: miniJobDataType[];
   jobsLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
   activeJobData: allJobDataType | null;
   activeJobLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';

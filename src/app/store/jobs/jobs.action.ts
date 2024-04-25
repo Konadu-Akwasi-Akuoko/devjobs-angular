@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { allJobDataType } from '../../../lib/types/types';
+import { allJobDataType, miniJobDataType } from '../../../lib/types/types';
 
 export const setInitialJobsData = createAction('[Jobs] Set Initial Jobs Data');
 
 export const setJobsData = createAction(
   '[Jobs] Set Jobs Data',
-  props<{ jobs: allJobDataType[] }>()
+  props<{ jobs: miniJobDataType[] }>()
 );
 
 export const setJobsLoadingState = createAction(

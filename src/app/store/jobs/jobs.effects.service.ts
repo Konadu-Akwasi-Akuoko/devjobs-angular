@@ -22,7 +22,18 @@ export class JobsEffectsService {
     return this.actions$.pipe(
       ofType(setInitialJobsData),
       exhaustMap(() => {
-        return of(data).pipe(
+        return of(
+          data.map((job) => ({
+            id: job.id,
+            company: job.company,
+            logo: job.logo,
+            logoBackground: job.logoBackground,
+            position: job.position,
+            postedAt: job.postedAt,
+            contract: job.contract,
+            location: job.location,
+          }))
+        ).pipe(
           map((data) => setJobsData({ jobs: data })),
           catchError(() => of(setJobsLoadingState({ state: 'ERROR' })))
         );
