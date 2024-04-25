@@ -1,1 +1,14 @@
-<p>requirements works!</p>
+<div class="mt-10">
+  <h2 class="text-xl font-bold dark:text-white">Requirements</h2>
+  <p class="mt-7 text-secondary-dark-gray">
+    {{ requirements.content }}
+  </p>
+  <ul class="mt-8 sm:mt-6">
+    @for (requirement of requirements.items; track $index) {
+    <li class="mt-2 flex flex-row items-start gap-8 text-secondary-dark-gray">
+      <span class="-mt-6 text-5xl text-primary-violet">.</span>
+      {{ requirement }}
+    </li>
+    }
+  </ul>
+</div>
