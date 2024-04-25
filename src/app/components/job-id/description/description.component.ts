@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-description',
@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './description.component.css'
 })
 export class DescriptionComponent {
+
+  @Input ({ required: true }) description: string = '';
 
 }
