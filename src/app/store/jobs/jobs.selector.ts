@@ -6,7 +6,7 @@ export const selectJobsData = (state: AppState) => state.jobsData;
 
 export const selectFilteredJobs = createSelector(
   selectJobsData,
-  (state: IJobsData) => state.filteredJobs
+  (state: IJobsData) => state.filtrableJobs
 );
 
 export const selectActiveJobData = (state: AppState) =>

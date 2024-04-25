@@ -13,7 +13,7 @@ import {
 
 export interface IJobsData {
   jobs: miniJobDataType[];
-  filteredJobs: miniJobDataType[];
+  filtrableJobs: miniJobDataType[];
   jobsLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
   activeJobData: allJobDataType | null;
   activeJobLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
@@ -22,7 +22,7 @@ export interface IJobsData {
 
 export const initialState: IJobsData = {
   jobs: [],
-  filteredJobs: [],
+  filtrableJobs: [],
   jobsLoadingState: '',
   activeJobData: null,
   activeJobLoadingState: '',
@@ -36,7 +36,7 @@ export const jobsReducer = createReducer(
   }),
   immerOn(setJobsData, (state: IJobsData, props) => {
     state.jobs = props.jobs;
-    state.filteredJobs = props.jobs;
+    state.filtrableJobs = props.jobs;
   }),
   immerOn(setJobsLoadingState, (state: IJobsData, props) => {
     state.jobsLoadingState = props.state;
@@ -51,9 +51,9 @@ export const jobsReducer = createReducer(
       userTitleCompanyExpertise === '' &&
       props.isFullTime === false
     ) {
-      state.filteredJobs = state.jobs;
+      state.filtrableJobs = state.jobs;
     } else {
-      state.filteredJobs = state.jobs.filter(
+      state.filtrableJobs = state.jobs.filter(
         (job) =>
           job.location.toLowerCase().includes(userLocation!) &&
           (job.position.toLowerCase().includes(userTitleCompanyExpertise!) ||
