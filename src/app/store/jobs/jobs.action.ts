@@ -1,7 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { allJobDataType, miniJobDataType } from '../../../lib/types/types';
 
-export const setInitialJobsData = createAction('[Jobs] Set Initial Jobs Data');
+export const loadJobs = createAction(
+  '[Jobs] Set Initial Jobs Data',
+  props<{ numberOfCurrentJobs: number }>()
+);
 
 export const setJobsData = createAction(
   '[Jobs] Set Jobs Data',
@@ -10,12 +13,16 @@ export const setJobsData = createAction(
 
 export const setJobsLoadingState = createAction(
   '[Jobs] Set Jobs Loading State',
-  props<{ state: 'LOADING' | 'SUCCESS' | 'ERROR' | '' }>()
+  props<{ state: 'LOADING' | 'SUCCESS' | 'ERROR' | ''; canLoadNext: boolean }>()
 );
 
 export const setFilteredJobs = createAction(
   '[Jobs] Set Filtered Jobs',
-  props<{ companyTitleExpertise?: string; isFullTime?: boolean; location?: string }>()
+  props<{
+    companyTitleExpertise?: string;
+    isFullTime?: boolean;
+    location?: string;
+  }>()
 );
 
 export const setActiveJobData = createAction(
