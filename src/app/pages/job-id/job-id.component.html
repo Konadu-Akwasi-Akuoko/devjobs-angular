@@ -22,4 +22,9 @@
       <app-what-will-you-do [roles]="(activeData$ | async)?.role!" />
     </div>
   </section>
+  <app-footer
+    [position]="(activeData$ | async)?.position!"
+    [company]="(activeData$ | async)?.company!"
+    [applyUrl]="(activeData$ | async)?.apply!"
+  />
 </main>

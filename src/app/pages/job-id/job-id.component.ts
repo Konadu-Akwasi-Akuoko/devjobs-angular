@@ -12,6 +12,7 @@ import { PositionAndApplyComponent } from '../../components/job-id/position-and-
 import { DescriptionComponent } from '../../components/job-id/description/description.component';
 import { RequirementsComponent } from '../../components/job-id/requirements/requirements.component';
 import { WhatWillYouDoComponent } from '../../components/job-id/what-will-you-do/what-will-you-do.component';
+import { FooterComponent } from '../../components/job-id/footer/footer.component';
 
 @Component({
   selector: 'app-job-id',
@@ -23,6 +24,7 @@ import { WhatWillYouDoComponent } from '../../components/job-id/what-will-you-do
     DescriptionComponent,
     RequirementsComponent,
     WhatWillYouDoComponent,
+    FooterComponent,
   ],
   templateUrl: './job-id.component.html',
   styleUrl: './job-id.component.css',

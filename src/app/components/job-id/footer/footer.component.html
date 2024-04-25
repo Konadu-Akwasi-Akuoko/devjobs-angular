@@ -1,0 +1,25 @@
+<div
+  class="horizontal-padding mt-16 rounded-t-md bg-white py-6 dark:bg-primary-very-dark-blue"
+>
+  <div
+    class="mt-5 flex flex-col items-center justify-between sm:mt-0 sm:flex-row"
+  >
+    <div class="hidden sm:mb-0 sm:flex sm:flex-col sm:gap-3">
+      <div>
+        <h2
+          class="text-[28px] font-bold text-primary-very-dark-blue dark:text-white"
+        >
+          {{ position }}
+        </h2>
+      </div>
+      <div>
+        <p class="text-secondary-dark-gray">{{ company }} Digital Inc.</p>
+      </div>
+    </div>
+    <div class="w-full sm:w-fit">
+      <button class="button1 w-full sm:w-fit">
+        <a [href]="applyUrl" target="_blank"> Apply Now </a>
+      </button>
+    </div>
+  </div>
+</div>
