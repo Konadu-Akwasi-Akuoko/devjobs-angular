@@ -12,3 +12,18 @@ export const setJobsLoadingState = createAction(
   '[Jobs] Set Jobs Loading State',
   props<{ state: 'LOADING' | 'SUCCESS' | 'ERROR' | '' }>()
 );
+
+export const setActiveJobData = createAction(
+  '[Job] Set Active Job Data',
+  props<{ data: allJobDataType }>()
+);
+
+export const setActiveJobState = createAction(
+  '[Job] Start Loading Active Job Data',
+  props<{ id: number }>()
+);
+
+export const setActiveJobLoadingState = createAction(
+  '[Job] Set Active Job Loading State',
+  props<{ state: 'LOADING' | 'SUCCESS' | 'ERROR' | '' }>()
+);

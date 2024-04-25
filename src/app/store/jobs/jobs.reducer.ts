@@ -2,6 +2,9 @@ import { createReducer } from '@ngrx/store';
 import { immerOn } from 'ngrx-immer/store';
 import { allJobDataType } from '../../../lib/types/types';
 import {
+  setActiveJobData,
+  setActiveJobLoadingState,
+  setActiveJobState,
   setInitialJobsData,
   setJobsData,
   setJobsLoadingState,
@@ -10,11 +13,17 @@ import {
 export interface IJobsData {
   jobs: allJobDataType[];
   jobsLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
+  activeJobData: allJobDataType | null;
+  activeJobLoadingState: 'LOADING' | 'SUCCESS' | 'ERROR' | '';
+  activeJobId: number;
 }
 
 export const initialState: IJobsData = {
   jobs: [],
   jobsLoadingState: '',
+  activeJobData: null,
+  activeJobLoadingState: '',
+  activeJobId: 0,
 };
 
 export const jobsReducer = createReducer(
@@ -27,5 +36,15 @@ export const jobsReducer = createReducer(
   }),
   immerOn(setJobsLoadingState, (state: IJobsData, props) => {
     state.jobsLoadingState = props.state;
+  }),
+  immerOn(setActiveJobState, (state: IJobsData, props) => {
+    state.activeJobLoadingState = 'LOADING';
+    state.activeJobId = props.id;
+  }),
+  immerOn(setActiveJobData, (state: IJobsData, props) => {
+    state.activeJobData = props.data;
+  }),
+  immerOn(setActiveJobLoadingState, (state: IJobsData, props) => {
+    state.activeJobLoadingState = props.state;
   })
 );

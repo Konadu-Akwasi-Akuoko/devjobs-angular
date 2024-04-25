@@ -5,6 +5,9 @@ import { catchError, exhaustMap, filter, map, of } from 'rxjs';
 import data from '../../../lib/data/data.json';
 import { AppState } from '../store';
 import {
+  setActiveJobData,
+  setActiveJobLoadingState,
+  setActiveJobState,
   setInitialJobsData,
   setJobsData,
   setJobsLoadingState,
@@ -36,4 +39,20 @@ export class JobsEffectsService {
       exhaustMap(() => of(setJobsLoadingState({ state: 'SUCCESS' })))
     );
   });
+
+  setActiveJobData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(setActiveJobState),
+      exhaustMap((state) => {
+        return of(data[state.id]).pipe(
+          map((data) => setActiveJobData({ data: data })),
+          catchError(() => of(setActiveJobLoadingState({ state: 'ERROR' })))
+        );
+      })
+    );
+  });
+
+  // setActiveJobDataState$ = createEffect(() => {
+  //   return this.actions$.pipe(ofType(setActiveJobData));
+  // });
 }
