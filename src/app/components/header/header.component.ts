@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.theme$ = store.select(selectTheme);
     store.dispatch(
       loadJobs({
-        numberOfCurrentJobs: this.currentJobs || 0,
+        numberOfCurrentJobs: this.currentJobs ?? 0,
       })
     );
   }
