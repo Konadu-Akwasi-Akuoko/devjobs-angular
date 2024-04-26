@@ -26,6 +26,7 @@ import { selectTheme } from '../../store/theme/theme.selectors';
 export class HeaderComponent implements OnInit, OnDestroy {
   theme$: Observable<ITheme>;
   theme!: 'light' | 'dark';
+  themeSubscription!: Subscription;
   jobsDataSubscription!: Subscription;
   jobsData$ = this.store.select(selectJobsData);
   currentJobs?: number;
@@ -43,10 +44,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.jobsDataSubscription = this.jobsData$.subscribe((data) => {
       this.currentJobs = data.jobs.length;
     });
+
+    this.themeSubscription = this.theme$.subscribe((theme) => {
+      this.theme = theme.currentTheme;
+    });
   }
 
   ngOnDestroy(): void {
     this.jobsDataSubscription.unsubscribe();
+    this.themeSubscription.unsubscribe();
   }
 
   onToggleThemeClick() {
