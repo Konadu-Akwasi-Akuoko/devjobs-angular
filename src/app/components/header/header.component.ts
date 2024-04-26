@@ -42,7 +42,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.jobsDataSubscription = this.jobsData$.subscribe((data) => {
       this.currentJobs = data.jobs.length;
-      console.log(this.currentJobs);
     });
   }
 

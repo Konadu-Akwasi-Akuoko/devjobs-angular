@@ -10,7 +10,7 @@
 }
 
 * {
-  @apply transition-colors duration-300 ease-in-out text-primary-midnight;
+  @apply transition-colors duration-300 ease-in-out text-primary-midnight scroll-smooth;
 }
 
 h1 {
