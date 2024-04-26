@@ -1,6 +1,13 @@
-import { Component, Input } from '@angular/core';
-import { miniJobDataType } from '../../../lib/types/types';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { miniJobDataType } from '../../../lib/types/types';
 
 @Component({
   selector: 'app-job-card',
@@ -8,9 +15,23 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   templateUrl: './job-card.component.html',
   styleUrl: './job-card.component.css',
+  animations: [
+    trigger('fadeInOut', [
+      state('in', style({ opacity: 1 })),
+      state('out', style({ opacity: 0 })),
+      transition('in <=> out', [animate('0.3s ease-in-out')]),
+    ]),
+  ],
 })
-export class JobCardComponent {
+export class JobCardComponent implements AfterViewInit {
   @Input({ required: true }) props!: miniJobDataType;
+  animationState = 'out';
 
   constructor() {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.animationState = 'in';
+    });
+  }
 }

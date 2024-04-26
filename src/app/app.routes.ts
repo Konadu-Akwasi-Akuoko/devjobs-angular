@@ -6,9 +6,18 @@ export const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: ':id', component: JobIdComponent },
+      {
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full',
+        data: { animation: 'HomePage' },
+      },
+      {
+        path: ':id',
+        component: JobIdComponent,
+        data: { animation: 'JobIdPage' },
+      },
     ],
   },
-  { path: '**', redirectTo: '/' },
+  { path: '**', redirectTo: '' },
 ];

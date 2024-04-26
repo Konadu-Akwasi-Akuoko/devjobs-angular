@@ -24,7 +24,7 @@
       label="Full Time Only"
       [checkBoxFormControl]="checkBoxFormControl"
     />
-    <button class="button1">Search</button>
+    <button (click)="onSearchButtonClick()" class="button1">Search</button>
   </div>
 </div>
 
@@ -51,7 +51,7 @@
     <div class="mr-4">
       <button
         class="rounded-5px bg-primary-violet p-3"
-        onClick="{onSearchButtonClick}"
+        (click)="onSearchButtonClick()"
       >
         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
           <path

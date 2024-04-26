@@ -10,7 +10,11 @@
 }
 
 * {
-  @apply transition-colors duration-300 ease-in-out text-primary-midnight;
+  @apply transition-colors duration-300 ease-in-out text-primary-midnight scroll-smooth;
+}
+
+html {
+  @apply dark:bg-primary-midnight bg-white min-h-screen;
 }
 
 h1 {
