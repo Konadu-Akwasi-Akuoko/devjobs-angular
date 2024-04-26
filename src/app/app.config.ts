@@ -15,6 +15,7 @@ import { reducers } from './store/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { JobsEffectsService } from './store/jobs/jobs.effects.service';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -27,6 +28,7 @@ const inMemoryScrollingFeature: InMemoryScrollingFeature =
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
+    provideAnimations(),
     provideRouter(routes, inMemoryScrollingFeature, withViewTransitions()),
     provideClientHydration(),
     provideStore(reducers),
