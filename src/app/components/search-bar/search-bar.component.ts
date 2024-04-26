@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { debounceTime, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { setFilteredJobs } from '../../store/jobs/jobs.action';
+import { AppState } from '../../store/store';
 import { CheckboxComponent } from '../checkbox/checkbox.component';
-import { FormInputComponent } from '../form-input/form-input.component';
 import { FilterButtonComponent } from '../filter-button/filter-button.component';
+import { FormInputComponent } from '../form-input/form-input.component';
 
 @Component({
   selector: 'app-search-bar',
@@ -37,12 +40,20 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   formGroupSubscription!: Subscription;
 
+  constructor(private store: Store<AppState>) {}
+
   ngOnInit(): void {
-    this.formGroupSubscription = this.searchFormGroup.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((value) => {
-        console.log(value);
-      });
+    this.formGroupSubscription = this.searchFormGroup.valueChanges.subscribe(
+      (value) => {
+        this.store.dispatch(
+          setFilteredJobs({
+            companyTitleExpertise: value.company!,
+            location: value.location!,
+            isFullTime: value.isFullTime!,
+          })
+        );
+      }
+    );
   }
 
   ngOnDestroy(): void {

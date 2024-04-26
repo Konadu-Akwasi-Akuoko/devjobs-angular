@@ -6,7 +6,7 @@ import {
   setActiveJobData,
   setActiveJobLoadingState,
   setActiveJobState,
-  setInitialJobsData,
+  loadJobs,
   setJobsData,
   setJobsLoadingState,
 } from './jobs.action';
@@ -18,13 +18,33 @@ import {
 export class JobsEffectsService {
   constructor(private actions$: Actions) {}
 
+  canLoadNext: boolean = false;
+
   loadJobsData$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(setInitialJobsData),
-      exhaustMap(() => {
-        return of(data).pipe(
+      ofType(loadJobs),
+      exhaustMap((payload) => {
+        this.canLoadNext = data[payload.numberOfCurrentJobs + 7] ? true : false;
+        return of(
+          data
+            .map((job) => ({
+              id: job.id,
+              company: job.company,
+              logo: job.logo,
+              logoBackground: job.logoBackground,
+              position: job.position,
+              postedAt: job.postedAt,
+              contract: job.contract,
+              location: job.location,
+            }))
+            .slice(0, payload.numberOfCurrentJobs + 6)
+        ).pipe(
           map((data) => setJobsData({ jobs: data })),
-          catchError(() => of(setJobsLoadingState({ state: 'ERROR' })))
+          catchError(() => {
+            return of(
+              setJobsLoadingState({ state: 'ERROR', canLoadNext: false })
+            );
+          })
         );
       })
     );
@@ -34,7 +54,14 @@ export class JobsEffectsService {
     return this.actions$.pipe(
       ofType(setJobsData),
       filter((data) => data.jobs.length > 0),
-      exhaustMap(() => of(setJobsLoadingState({ state: 'SUCCESS' })))
+      exhaustMap(() => {
+        return of(
+          setJobsLoadingState({
+            state: 'SUCCESS',
+            canLoadNext: this.canLoadNext,
+          })
+        );
+      })
     );
   });
 

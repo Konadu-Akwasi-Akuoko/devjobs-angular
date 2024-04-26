@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
-import { JobCardComponent } from '../job-card/job-card.component';
-import { AppState } from '../../store/store';
-import { Store } from '@ngrx/store';
-import { selectJobsData } from '../../store/jobs/jobs.selector';
-import { Observable } from 'rxjs';
-import { IJobsData } from '../../store/jobs/jobs.reducer';
 import { AsyncPipe } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { miniJobDataType } from '../../../lib/types/types';
+import { loadJobs } from '../../store/jobs/jobs.action';
+import {
+  selectCanLoadNextJob,
+  selectFilteredJobs,
+} from '../../store/jobs/jobs.selector';
+import { AppState } from '../../store/store';
+import { JobCardComponent } from '../job-card/job-card.component';
 
 @Component({
   selector: 'app-jobs-section',
@@ -14,10 +18,30 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './jobs-section.component.html',
   styleUrl: './jobs-section.component.css',
 })
-export class JobsSectionComponent {
-  jobsData : Observable<IJobsData>;
+export class JobsSectionComponent implements OnInit, OnDestroy {
+  jobsData$: Observable<miniJobDataType[]>;
+  canLoadNext$: Observable<boolean>;
+  jobDataSubscription!: Subscription;
+  numberOfCurrentJobs = 0;
 
   constructor(private store: Store<AppState>) {
-    this.jobsData = this.store.select(selectJobsData);
+    this.jobsData$ = this.store.select(selectFilteredJobs);
+    this.canLoadNext$ = this.store.select(selectCanLoadNextJob);
+  }
+
+  ngOnInit(): void {
+    this.jobDataSubscription = this.jobsData$.subscribe((data) => {
+      this.numberOfCurrentJobs = data.length;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.jobDataSubscription.unsubscribe();
+  }
+
+  onClickLoadMore() {
+    this.store.dispatch(
+      loadJobs({ numberOfCurrentJobs: this.numberOfCurrentJobs })
+    );
   }
 }
