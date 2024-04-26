@@ -59,4 +59,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.formGroupSubscription.unsubscribe();
   }
+
+  onSearchButtonClick() {
+    console.log('search button clicked');
+    this.store.dispatch(
+      setFilteredJobs({
+        companyTitleExpertise: this.companyFormControl.value ?? '',
+        location: this.locationFormControl.value ?? '',
+        isFullTime: this.checkBoxFormControl.value ?? false,
+      })
+    );
+  }
 }
