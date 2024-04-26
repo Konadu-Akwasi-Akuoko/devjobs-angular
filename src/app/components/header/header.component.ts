@@ -23,7 +23,21 @@ export class HeaderComponent {
 
   constructor(private store: Store<AppState>) {
     this.theme$ = store.select(selectTheme);
-    store.dispatch(setInitialJobsData());
+    store.dispatch(
+      loadJobs({
+        numberOfCurrentJobs: this.currentJobs || 0,
+      })
+    );
+  }
+
+  ngOnInit(): void {
+    this.jobsDataSubscription = this.jobsData$.subscribe((data) => {
+      this.currentJobs = data.jobs.length;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.jobsDataSubscription.unsubscribe();
   }
 
   onToggleThemeClick() {
