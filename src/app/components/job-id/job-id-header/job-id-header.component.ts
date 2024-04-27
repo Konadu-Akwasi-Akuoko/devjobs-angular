@@ -1,10 +1,10 @@
-import { LowerCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-job-id-header',
   standalone: true,
-  imports: [LowerCasePipe],
+  imports: [CommonModule],
   templateUrl: './job-id-header.component.html',
   styleUrl: './job-id-header.component.css',
 })

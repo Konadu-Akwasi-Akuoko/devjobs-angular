@@ -1,7 +1,9 @@
-<div class="{{ (theme$ | async)?.currentTheme }}">
+@if ((theme$ | async)?.currentTheme) {
+<div class="{{ (theme$ | async)?.currentTheme }}" id="theme-provider">
   <div
     class="relative min-h-screen bg-secondary-light-gray dark:bg-primary-midnight"
   >
     <ng-content></ng-content>
   </div>
 </div>
+}

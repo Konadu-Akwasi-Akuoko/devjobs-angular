@@ -13,10 +13,6 @@
   @apply transition-colors duration-300 ease-in-out text-primary-midnight scroll-smooth;
 }
 
-html {
-  @apply dark:bg-primary-midnight bg-white min-h-screen;
-}
-
 h1 {
   font-size: 28px;
   line-height: 34px;
@@ -88,4 +84,9 @@ p {
     margin-left: 10%;
     margin-right: 10%;
   }
+}
+\html {
+  @apply dark:bg-primary-midnight bg-white min-h-screen;
+  visibility: visible;
+  opacity: 1;
 }
