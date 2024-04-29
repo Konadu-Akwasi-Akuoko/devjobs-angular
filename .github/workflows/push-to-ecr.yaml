@@ -78,7 +78,9 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           echo "SSHing into the EC2 instance..."
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-          
+
+          export IMAGE='${{steps.build-image.outputs.image}}'
+
           echo "Stop all running containers..."
           docker stop -t 1 $(docker ps -q)
           echo "Remove all containers..."
@@ -87,9 +89,9 @@ jobs:
           docker rm -f $(docker ps -a -q)
 
           echo "Pull the new image..."
-          docker pull ${IMAGE}
+          docker pull $IMAGE
           ehcho "Run the new image..."
-          docker run -d -p 4000:4000 ${IMAGE}
+          docker run -d -p 4000:4000 $IMAGE
 
           docker ps
           '
