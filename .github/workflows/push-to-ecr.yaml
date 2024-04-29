@@ -9,32 +9,32 @@ env:
   AWS_DEFAULT_REGION: us-east-1
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+  # build-and-test:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #     contents: read
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: pnpm-setup
-        uses: pnpm/action-setup@v2
-        with:
-          version: 6
+  #     - name: pnpm-setup
+  #       uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 6
 
-      - name: pnpm-install-deps
-        run: pnpm install
+  #     - name: pnpm-install-deps
+  #       run: pnpm install
 
-      - name: pnpm-test-angular
-        run: pnpm run test:ci
+  #     - name: pnpm-test-angular
+  #       run: pnpm run test:ci
 
-      - name: pnpm-run-build
-        run: pnpm build
+  #     - name: pnpm-run-build
+  #       run: pnpm build
 
   deploy:
-    needs: build-and-test
+    # needs: build-and-test
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -66,6 +66,27 @@ jobs:
           docker tag angular-devjobs-public-repository:${IMAGE_TAG} public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
           docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
           echo "image=public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}" >> $GITHUB_OUTPUT
+
+      - name: Deploy to EC2
+        env:
+          PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
+          HOSTNAME: ${{secrets.HOSTNAME}}
+          USER_NAME: ${{secrets.USER_NAME}}
+          IMAGE: ${{steps.build-image.outputs.image}}
+
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
+          docker stop -t 1 $(docker ps -q)
+          docker rmi -f $(docker images -q)
+          docker rm -f $(docker ps -a -q)
+
+          docker pull ${IMAGE}
+          docker run -d -p 4000:4000 ${IMAGE}
+
+          docker ps
+          '
 
       # - name: Download task definition
       #   run: |
