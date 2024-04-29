@@ -1,0 +1,15 @@
+<div [class]="twMerge">
+  @if (iconSrc) {<img
+    [src]="iconSrc"
+    alt="icon"
+    class="w-auto max-w-6 h-6 inline"
+  />}
+  <input
+    [id]="inputName"
+    [formControl]="inputFormControl"
+    [placeholder]="placeholder"
+    type="text"
+    [value]="inputFormControl.value"
+    class="flex-1 appearance-none py-7 text-base placeholder:text-secondary-gray focus-visible:outline-none dark:bg-primary-very-dark-blue dark:text-white"
+  />
+</div>

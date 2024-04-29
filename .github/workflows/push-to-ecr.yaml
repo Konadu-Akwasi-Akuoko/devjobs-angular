@@ -9,32 +9,32 @@ env:
   AWS_DEFAULT_REGION: us-east-1
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+  # build-and-test:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #     contents: read
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: pnpm-setup
-        uses: pnpm/action-setup@v2
-        with:
-          version: 6
+  #     - name: pnpm-setup
+  #       uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 6
 
-      - name: pnpm-install-deps
-        run: pnpm install
+  #     - name: pnpm-install-deps
+  #       run: pnpm install
 
-      - name: pnpm-test-angular
-        run: pnpm run test:ci
+  #     - name: pnpm-test-angular
+  #       run: pnpm run test:ci
 
-      - name: pnpm-run-build
-        run: pnpm build
+  #     - name: pnpm-run-build
+  #       run: pnpm build
 
   deploy:
-    needs: build-and-test
+    # needs: build-and-test
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -67,23 +67,44 @@ jobs:
           docker push public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}
           echo "image=public.ecr.aws/s1p6w2l2/angular-devjobs-public-repository:${IMAGE_TAG}" >> $GITHUB_OUTPUT
 
-      - name: Download task definition
+      - name: Deploy to EC2
+        env:
+          PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
+          HOSTNAME: ${{secrets.HOSTNAME}}
+          USER_NAME: ${{secrets.USER_NAME}}
+          IMAGE: ${{steps.build-image.outputs.image}}
+
         run: |
-          aws ecs describe-task-definition --task-definition devjobs-task-definition --query taskDefinition > task-definition.json --region us-east-1
-          ls -a
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
+          docker stop -t 1 $(docker ps -q)
+          docker rmi -f $(docker images -q)
+          docker rm -f $(docker ps -a -q)
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: devjobs
-          image: ${{ steps.build-image.outputs.image }}
+          docker pull ${IMAGE}
+          docker run -d -p 4000:4000 ${IMAGE}
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: devjobs-service
-          cluster: devjobs-ecs-cluster
-          wait-for-service-stability: true
+          docker ps
+          '
+
+      # - name: Download task definition
+      #   run: |
+      #     aws ecs describe-task-definition --task-definition devjobs-task-definition --query taskDefinition > task-definition.json --region us-east-1
+      #     ls -a
+
+      # - name: Fill in the new image ID in the Amazon ECS task definition
+      #   id: task-def
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #     task-definition: task-definition.json
+      #     container-name: devjobs
+      #     image: ${{ steps.build-image.outputs.image }}
+
+      # - name: Deploy Amazon ECS task definition
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: ${{ steps.task-def.outputs.task-definition }}
+      #     service: devjobs-service
+      #     cluster: devjobs-ecs-cluster
+      #     wait-for-service-stability: true

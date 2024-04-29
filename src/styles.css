@@ -3,6 +3,89 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --modal-bg: rgb(0, 0, 0, 0.2);
+  }
+}
+
+* {
+  @apply transition-colors duration-300 ease-in-out text-primary-midnight scroll-smooth;
+}
+
 html {
-  @apply bg-blue-700;
+  @apply dark:bg-primary-midnight bg-white min-h-screen;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 34px;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 29px;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h4 {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.button1 {
+  @apply flex h-12 flex-row  items-center justify-center rounded-5px bg-primary-violet px-10 py-4 font-bold text-white transition-colors hover:bg-primary-light-violet;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.button2 {
+  @apply flex flex-row items-center rounded-5px bg-[#eeeffc] px-10 py-4 font-bold text-primary-violet transition-colors hover:bg-[#c5c9f4] dark:bg-[#303642] dark:text-white dark:hover:bg-[#696e76];
+  font-size: 16px;
+  line-height: 26px;
+}
+
+/* Theme toggle CSS */
+/* .theme-light {
+    @apply ;
+  } */
+
+.theme-dark {
+  @apply ml-[65%];
+}
+
+/* !Mobile CSS */
+.horizontal-padding {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.horizontal-margin {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/* !Tablet CSS  */
+@media (min-width: 640px) {
+}
+/* !Desktop CSS */
+@media (min-width: 1280px) {
+  .horizontal-padding {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .horizontal-margin {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
 }

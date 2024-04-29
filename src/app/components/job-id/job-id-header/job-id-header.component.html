@@ -1,0 +1,29 @@
+<div
+  class="-mt-4 flex flex-col items-center rounded-md bg-white dark:bg-primary-very-dark-blue sm:-mt-10 sm:flex-row"
+>
+  <div
+    class="-mt-4 flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-md sm:mt-0 sm:rounded-none xl:h-[140px] xl:w-[140px]"
+    [style]="'background-color: ' + logoBackground + ';'"
+  >
+    <img [src]="logoSrc" alt="logo" [class]="'h-auto w-3/4'" />
+  </div>
+  <div
+    class="mt-6 flex flex-col items-center justify-between sm:ml-10 sm:mt-0 sm:grow sm:flex-row"
+  >
+    <div>
+      <h1
+        class="mb-3 text-center text-2xl font-bold text-primary-very-dark-blue dark:text-white sm:mb-6"
+      >
+        {{ companyName }}
+      </h1>
+      <p class="text-center text-secondary-dark-gray">
+        {{ companyName | lowercase }}.com
+      </p>
+    </div>
+    <div class="mb-8 mt-6 sm:mb-0 sm:mr-10 sm:mt-0">
+      <button class="button2">
+        <a [href]="companyWebsiteURL" target="_blank"> Company Site </a>
+      </button>
+    </div>
+  </div>
+</div>
