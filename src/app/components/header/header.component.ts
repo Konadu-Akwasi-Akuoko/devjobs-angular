@@ -25,7 +25,7 @@ import { selectTheme } from '../../store/theme/theme.selectors';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   theme$: Observable<ITheme>;
-  theme!: 'light' | 'dark';
+  theme!: 'light' | 'dark' | null;
   themeSubscription!: Subscription;
   jobsDataSubscription!: Subscription;
   jobsData$ = this.store.select(selectJobsData);
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.theme$ = store.select(selectTheme);
     store.dispatch(
       loadJobs({
-        numberOfCurrentJobs: this.currentJobs || 0,
+        numberOfCurrentJobs: this.currentJobs ?? 0,
       })
     );
   }

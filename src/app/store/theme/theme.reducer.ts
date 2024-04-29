@@ -3,11 +3,11 @@ import { immerOn } from 'ngrx-immer/store';
 import { setTheme } from './theme.action';
 
 export interface ITheme {
-  currentTheme: 'light' | 'dark';
+  currentTheme: 'light' | 'dark' | null;
 }
 
 export const initialState: ITheme = {
-  currentTheme: 'light',
+  currentTheme: null,
 };
 
 export const themeReducer = createReducer(
