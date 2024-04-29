@@ -16,6 +16,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { JobsEffectsService } from './store/jobs/jobs.effects.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { SearchInputsService } from './store/search-inputs/search-inputs.service';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -32,7 +33,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, inMemoryScrollingFeature, withViewTransitions()),
     provideClientHydration(),
     provideStore(reducers),
-    provideEffects(JobsEffectsService),
+    provideEffects(JobsEffectsService, SearchInputsService),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

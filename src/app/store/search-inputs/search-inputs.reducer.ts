@@ -17,6 +17,9 @@ export const initialState: ISearchInputs = {
 export const searchInputsReducer = createReducer(
   initialState,
   immerOn(setSearchInputs, (state: ISearchInputs, props) => {
-    state = props.searchInputs;
+    state.titleCompanyExpertiseInput =
+      props.searchInputs.titleCompanyExpertiseInput;
+    state.locationInput = props.searchInputs.locationInput;
+    state.isFullTimeInput = props.searchInputs.isFullTimeInput;
   })
 );
