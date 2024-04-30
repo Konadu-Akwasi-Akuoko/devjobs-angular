@@ -6,7 +6,9 @@
   }
 </div>
 <div class="mt-14 flex w-full justify-center pb-28">
-  @if (canLoadNext$ | async) {
-  <button (click)="onClickLoadMore()" class="button1">Load More</button>
+  @if (((isSearching$ | async) === false) && (canLoadNext$ | async)) {
+  <button (click)="onClickLoadMore()" class="button1" type="button">
+    Load More
+  </button>
   }
 </div>

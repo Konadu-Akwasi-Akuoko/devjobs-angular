@@ -7,6 +7,7 @@ import { loadJobs } from '../../store/jobs/jobs.action';
 import {
   selectCanLoadNextJob,
   selectFilteredJobs,
+  selectIsSearching,
 } from '../../store/jobs/jobs.selector';
 import { AppState } from '../../store/store';
 import { JobCardComponent } from '../job-card/job-card.component';
@@ -21,12 +22,14 @@ import { JobCardComponent } from '../job-card/job-card.component';
 export class JobsSectionComponent implements OnInit, OnDestroy {
   jobsData$: Observable<miniJobDataType[]>;
   canLoadNext$: Observable<boolean>;
+  isSearching$: Observable<boolean>;
   jobDataSubscription!: Subscription;
   numberOfCurrentJobs = 0;
 
   constructor(private store: Store<AppState>) {
     this.jobsData$ = this.store.select(selectFilteredJobs);
     this.canLoadNext$ = this.store.select(selectCanLoadNextJob);
+    this.isSearching$ = this.store.select(selectIsSearching);
   }
 
   ngOnInit(): void {
