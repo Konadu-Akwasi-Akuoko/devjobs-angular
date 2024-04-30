@@ -8,10 +8,9 @@ describe('ModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent]
-    })
-    .compileComponents();
-    
+      imports: [ModalComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +18,11 @@ describe('ModalComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call next on renderModal with false when closeModalOnParentClick is called', () => {
+    const nextSpy = jest.spyOn(component.renderModal, 'next');
+    component.closeModalOnParentClick();
+    expect(nextSpy).toHaveBeenCalledWith(false);
   });
 });
