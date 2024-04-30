@@ -4,9 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { setFilteredJobs } from '../../store/jobs/jobs.action';
-import {
-  selectSearchInputs
-} from '../../store/search-inputs/search-input.selectors';
+import { selectSearchInputs } from '../../store/search-inputs/search-input.selectors';
 import { ISearchInputs } from '../../store/search-inputs/search-inputs.reducer';
 import { AppState } from '../../store/store';
 import { CheckboxComponent } from '../checkbox/checkbox.component';
@@ -34,12 +32,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     titleCompanyExpertiseInput: '',
   };
 
-  searchInputsSubscription: Subscription = this.store
-    .select(selectSearchInputs)
-    .pipe()
-    .subscribe((value) => {
-      this.searchInputs = value;
-    });
+  searchInputsSubscription!: Subscription;
 
   companyFormControl = new FormControl(
     this.searchInputs.titleCompanyExpertiseInput
@@ -73,6 +66,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         );
       }
     );
+
+    this.searchInputsSubscription = this.store
+      .select(selectSearchInputs)
+      .pipe()
+      .subscribe((value) => {
+        this.searchInputs = value;
+      });
   }
 
   ngOnDestroy(): void {
