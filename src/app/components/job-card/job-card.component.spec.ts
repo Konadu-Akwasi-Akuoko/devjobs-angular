@@ -43,6 +43,6 @@ describe('JobCardComponent', () => {
     setTimeout(() => {
       expect(component.animationState).toBe('in');
       done();
-    }, 1000); // wait for the setTimeout in ngAfterViewInit
+    }, 1000);
   });
 });

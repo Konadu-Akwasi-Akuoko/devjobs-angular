@@ -27,8 +27,6 @@ export class JobCardComponent implements AfterViewInit {
   @Input({ required: true }) props!: miniJobDataType;
   animationState = 'out';
 
-  constructor() {}
-
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.animationState = 'in';
