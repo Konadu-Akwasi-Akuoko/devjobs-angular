@@ -1,6 +1,6 @@
 <main>
   @switch ((activeDataLoadingState$ | async)) { @case ("SUCCESS") {
-  <section class="horizontal-padding">
+  <section class="horizontal-padding-id">
     <app-job-id-header
       [logoBackground]="(activeData$ | async)?.logoBackground!"
       [logoSrc]="(activeData$ | async)?.logo!"
@@ -9,7 +9,7 @@
     />
 
     <div
-      className="mt-8 rounded-md bg-white p-6 dark:bg-primary-very-dark-blue sm:p-12"
+      class="mt-8 rounded-md bg-white p-6 dark:bg-primary-very-dark-blue sm:pl-12 sm:pr-[43px]"
     >
       <app-position-and-apply
         [postedAt]="(activeData$ | async)?.postedAt!"
