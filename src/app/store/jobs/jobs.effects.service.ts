@@ -24,7 +24,7 @@ export class JobsEffectsService {
     return this.actions$.pipe(
       ofType(loadJobs),
       exhaustMap((payload) => {
-        this.canLoadNext = data[payload.numberOfCurrentJobs + 7] ? true : false;
+        this.canLoadNext = !!data[payload.numberOfCurrentJobs + 12];
         return of(
           data
             .map((job) => ({
@@ -37,7 +37,7 @@ export class JobsEffectsService {
               contract: job.contract,
               location: job.location,
             }))
-            .slice(0, payload.numberOfCurrentJobs + 6)
+            .slice(0, payload.numberOfCurrentJobs + 12)
         ).pipe(
           map((data) => setJobsData({ jobs: data })),
           catchError(() => {

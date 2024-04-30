@@ -20,4 +20,10 @@ describe('FilterButtonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call next on renderModal with true when onFilterButton is called', () => {
+    const nextSpy = jest.spyOn(component.renderModal, 'next');
+    component.onFilterButtonClicked();
+    expect(nextSpy).toHaveBeenCalledWith(true);
+  })
 });

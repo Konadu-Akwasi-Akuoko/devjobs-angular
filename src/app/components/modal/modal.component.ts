@@ -11,8 +11,6 @@ import { Subject } from 'rxjs';
 export class ModalComponent {
   @Input({ required: true }) renderModal: Subject<boolean> = new Subject();
 
-  constructor() {}
-
   closeModalOnParentClick() {
     this.renderModal.next(false);
   }
