@@ -1,9 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { setFilteredJobs } from '../../store/jobs/jobs.action';
+import {
+  selectSearchInputs
+} from '../../store/search-inputs/search-input.selectors';
+import { ISearchInputs } from '../../store/search-inputs/search-inputs.reducer';
 import { AppState } from '../../store/store';
 import { CheckboxComponent } from '../checkbox/checkbox.component';
 import { FilterButtonComponent } from '../filter-button/filter-button.component';
@@ -22,15 +26,32 @@ import { FormInputComponent } from '../form-input/form-input.component';
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
-  companyFormControl = new FormControl('');
+  private store: Store<AppState> = inject(Store);
+
+  searchInputs: ISearchInputs = {
+    isFullTimeInput: false,
+    locationInput: '',
+    titleCompanyExpertiseInput: '',
+  };
+
+  searchInputsSubscription: Subscription = this.store
+    .select(selectSearchInputs)
+    .pipe()
+    .subscribe((value) => {
+      this.searchInputs = value;
+    });
+
+  companyFormControl = new FormControl(
+    this.searchInputs.titleCompanyExpertiseInput
+  );
   companyName = 'company';
   companyIconSrc = '/assets/desktop/icon-search.svg';
 
-  locationFormControl = new FormControl('');
+  locationFormControl = new FormControl(this.searchInputs.locationInput);
   locationName = 'location';
   locationIconSrc = '/assets/desktop/icon-location.svg';
 
-  checkBoxFormControl = new FormControl(false);
+  checkBoxFormControl = new FormControl(this.searchInputs.isFullTimeInput);
 
   searchFormGroup = new FormGroup({
     company: this.companyFormControl,
@@ -39,8 +60,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   });
 
   formGroupSubscription!: Subscription;
-
-  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.formGroupSubscription = this.searchFormGroup.valueChanges.subscribe(
@@ -57,11 +76,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.searchInputsSubscription.unsubscribe();
     this.formGroupSubscription.unsubscribe();
   }
 
   onSearchButtonClick() {
-    console.log('search button clicked');
     this.store.dispatch(
       setFilteredJobs({
         companyTitleExpertise: this.companyFormControl.value ?? '',

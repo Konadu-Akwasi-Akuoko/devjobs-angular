@@ -20,6 +20,7 @@ export interface IJobsData {
   activeJobId: number;
   numberOfCurrentJobs: number;
   canLoadNextData: boolean;
+  isSearching: boolean;
 }
 
 export const initialState: IJobsData = {
@@ -31,6 +32,7 @@ export const initialState: IJobsData = {
   activeJobId: 0,
   numberOfCurrentJobs: 0,
   canLoadNextData: false,
+  isSearching: false,
 };
 
 export const jobsReducer = createReducer(
@@ -58,7 +60,9 @@ export const jobsReducer = createReducer(
       props.isFullTime === false
     ) {
       state.filtrableJobs = state.jobs;
+      state.isSearching = false;
     } else {
+      state.isSearching = true;
       state.filtrableJobs = state.jobs.filter(
         (job) =>
           job.location.toLowerCase().includes(userLocation!) &&
