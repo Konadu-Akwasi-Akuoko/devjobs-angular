@@ -18,7 +18,8 @@ export class SearchInputsService {
           setSearchInputs({
             searchInputs: {
               titleCompanyExpertiseInput: payload.companyTitleExpertise ?? '',
-              locationInput: payload.location ?? '',
+              locationsCombobox: payload.location ?? '',
+              // locationInput: payload.location ?? '',
               isFullTimeInput: payload.isFullTime ?? false,
             },
           })

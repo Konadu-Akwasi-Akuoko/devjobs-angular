@@ -9,6 +9,7 @@ import {
   loadJobs,
   setJobsData,
   setJobsLoadingState,
+  setLocations,
 } from './jobs.action';
 
 // Simulate an effect of fetching data from an API
@@ -59,6 +60,20 @@ export class JobsEffectsService {
           setJobsLoadingState({
             state: 'SUCCESS',
             canLoadNext: this.canLoadNext,
+          })
+        );
+      })
+    );
+  });
+
+  setJobsLocations$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(setJobsData),
+      filter((data) => data.jobs.length > 0),
+      exhaustMap((data) => {
+        return of(
+          setLocations({
+            locations: [...new Set(data.jobs.map((job) => job.location))],
           })
         );
       })

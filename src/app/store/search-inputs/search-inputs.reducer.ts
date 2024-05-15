@@ -4,14 +4,16 @@ import { immerOn } from 'ngrx-immer/store';
 
 export interface ISearchInputs {
   titleCompanyExpertiseInput: string;
-  locationInput: string;
+  // locationInput: string;
   isFullTimeInput: boolean;
+  locationsCombobox: string;
 }
 
 export const initialState: ISearchInputs = {
   titleCompanyExpertiseInput: '',
-  locationInput: '',
+  // locationInput: '',
   isFullTimeInput: false,
+  locationsCombobox: '',
 };
 
 export const searchInputsReducer = createReducer(
@@ -19,7 +21,8 @@ export const searchInputsReducer = createReducer(
   immerOn(setSearchInputs, (state: ISearchInputs, props) => {
     state.titleCompanyExpertiseInput =
       props.searchInputs.titleCompanyExpertiseInput;
-    state.locationInput = props.searchInputs.locationInput;
+    // state.locationInput = props.searchInputs.locationInput;
     state.isFullTimeInput = props.searchInputs.isFullTimeInput;
+    state.locationsCombobox = props.searchInputs.locationsCombobox;
   })
 );
