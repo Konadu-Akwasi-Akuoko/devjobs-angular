@@ -97,6 +97,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   commandSelected(location: string) {
     this.state.set('closed');
+    if (this.currentLocation() === location || location === '') {
+      this.currentLocation.set('');
+      this.searchFormGroup.updateValueAndValidity({ emitEvent: true });
+      return;
+    }
     this.currentLocation.set(location);
     this.searchFormGroup.updateValueAndValidity({ emitEvent: true });
   }
@@ -104,7 +109,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.formGroupSubscription = this.searchFormGroup.valueChanges.subscribe(
       (value) => {
-        console.log("Dispatched")
+        console.log('Dispatched');
         this.store.dispatch(
           setFilteredJobs({
             companyTitleExpertise: value.company!,
