@@ -28,3 +28,5 @@ export const selectActiveJobLoadingState = (state: AppState) =>
 
 export const selectIsSearching = (state: AppState) =>
   state.jobsData.isSearching;
+
+export const selectLocations = (state: AppState) => state.jobsData.locations;

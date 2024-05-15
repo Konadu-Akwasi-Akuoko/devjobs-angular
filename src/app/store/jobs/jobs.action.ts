@@ -39,3 +39,8 @@ export const setActiveJobLoadingState = createAction(
   '[Job] Set Active Job Loading State',
   props<{ state: 'LOADING' | 'SUCCESS' | 'ERROR' | '' }>()
 );
+
+export const setLocations = createAction(
+  '[Job] Set Locations Data',
+  props<{ locations: string[] }>()
+);

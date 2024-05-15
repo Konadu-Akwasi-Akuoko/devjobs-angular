@@ -1,4 +1,4 @@
-aml<div>
+<div>
   <button class="p-3" (click)="onFilterButtonClicked()">
     <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -14,13 +14,92 @@ aml<div>
 
 <app-modal [renderModal]="renderModal">
   <div>
-    <app-form-input
+    <!-- <app-form-input
       class="w-full px-6"
       [inputName]="locationName"
       [inputFormControl]="locationFormControl"
       [iconSrc]="locationIconSrc"
       placeholder="Filter by location…"
-    />
+    /> -->
+    <div
+    class="flex flex-row items-center dark:text-white w-full px-6 bg-inherit"
+  >
+    <brn-popover
+      [state]="state()"
+      (stateChanged)="comboboxStateChange($event)"
+      sideOffset="5"
+      closeDelay="100"
+      class="w-full"
+    >
+      <button
+        id="edit-profile"
+        variant="outline"
+        brnPopoverTrigger
+        hlmBtn
+        class="flex flex-row items-center dark:text-white w-full justify-between hover:bg-blue-50 dark:hover:bg-blue-950"
+      >
+        {{ currentLocation() ? currentLocation() : "Select location..." }}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          [attr.stroke]="
+            (currentTheme | async)?.currentTheme === 'dark' ? '#fff' : '#000'
+          "
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-map-pin"
+        >
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+      </button>
+
+      <brn-cmd
+        *brnPopoverContent="let ctx"
+        hlmPopoverContent
+        hlm
+        class="p-0 w-full"
+      >
+        <hlm-cmd-input-wrapper>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-search"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input placeholder="Search location..." brnCmdInput hlm />
+        </hlm-cmd-input-wrapper>
+        <div *brnCmdEmpty hlmCmdEmpty>No results found.</div>
+        <brn-cmd-list hlm>
+          <brn-cmd-group hlm>
+            @for (location of allLocations | async; track location) {
+            <button
+              brnCmdItem
+              [value]="location"
+              (selected)="commandSelected(location)"
+              hlm
+            >
+              {{ location }}
+            </button>
+            }
+          </brn-cmd-group>
+        </brn-cmd-list>
+      </brn-cmd>
+    </brn-popover>
+  </div>
     <div class="h-[1px] w-full bg-secondary-light-gray dark:bg-slate-500"></div>
 
     <div class="p-6">

@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         numberOfCurrentJobs: this.currentJobs ?? 0,
       })
     );
+    // store.dispatch
   }
 
   ngOnInit(): void {

@@ -9,6 +9,7 @@ import {
   loadJobs,
   setJobsData,
   setJobsLoadingState,
+  setLocations,
 } from './jobs.action';
 
 export interface IJobsData {
@@ -21,6 +22,7 @@ export interface IJobsData {
   numberOfCurrentJobs: number;
   canLoadNextData: boolean;
   isSearching: boolean;
+  locations: string[];
 }
 
 export const initialState: IJobsData = {
@@ -33,6 +35,7 @@ export const initialState: IJobsData = {
   numberOfCurrentJobs: 0,
   canLoadNextData: false,
   isSearching: false,
+  locations: [],
 };
 
 export const jobsReducer = createReducer(
@@ -81,5 +84,8 @@ export const jobsReducer = createReducer(
   }),
   immerOn(setActiveJobLoadingState, (state: IJobsData, props) => {
     state.activeJobLoadingState = props.state;
+  }),
+  immerOn(setLocations, (state: IJobsData, props) => {
+    state.locations = props.locations;
   })
 );
