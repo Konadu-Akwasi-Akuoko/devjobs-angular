@@ -82,6 +82,14 @@
         <div *brnCmdEmpty hlmCmdEmpty>No results found.</div>
         <brn-cmd-list hlm>
           <brn-cmd-group hlm>
+            <button
+              brnCmdItem
+              [value]="'All Locations'"
+              (selected)="commandSelected('')"
+              hlm
+            >
+              All locations
+            </button>
             @for (location of allLocations | async; track location) {
             <button
               brnCmdItem
