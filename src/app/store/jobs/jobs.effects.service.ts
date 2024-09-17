@@ -24,6 +24,7 @@ export class JobsEffectsService {
   loadJobsData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadJobs),
+      // action1, action2, acrion3 => action
       exhaustMap((payload) => {
         this.canLoadNext = !!data[payload.numberOfCurrentJobs + 12];
         return of(
@@ -38,16 +39,16 @@ export class JobsEffectsService {
               contract: job.contract,
               location: job.location,
             }))
-            .slice(0, payload.numberOfCurrentJobs + 12)
+            .slice(0, payload.numberOfCurrentJobs + 12),
         ).pipe(
           map((data) => setJobsData({ jobs: data })),
           catchError(() => {
             return of(
-              setJobsLoadingState({ state: 'ERROR', canLoadNext: false })
+              setJobsLoadingState({ state: 'ERROR', canLoadNext: false }),
             );
-          })
+          }),
         );
-      })
+      }),
     );
   });
 
@@ -60,9 +61,9 @@ export class JobsEffectsService {
           setJobsLoadingState({
             state: 'SUCCESS',
             canLoadNext: this.canLoadNext,
-          })
+          }),
         );
-      })
+      }),
     );
   });
 
@@ -74,9 +75,9 @@ export class JobsEffectsService {
         return of(
           setLocations({
             locations: [...new Set(data.jobs.map((job) => job.location))],
-          })
+          }),
         );
-      })
+      }),
     );
   });
 
@@ -88,16 +89,16 @@ export class JobsEffectsService {
           return of(setActiveJobLoadingState({ state: 'ERROR' }));
         return of(data[state.id - 1]).pipe(
           map((data) => setActiveJobData({ data: data })),
-          catchError(() => of(setActiveJobLoadingState({ state: 'ERROR' })))
+          catchError(() => of(setActiveJobLoadingState({ state: 'ERROR' }))),
         );
-      })
+      }),
     );
   });
 
   setActiveJobDataState$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(setActiveJobData),
-      exhaustMap(() => of(setActiveJobLoadingState({ state: 'SUCCESS' })))
+      exhaustMap(() => of(setActiveJobLoadingState({ state: 'SUCCESS' }))),
     );
   });
 }

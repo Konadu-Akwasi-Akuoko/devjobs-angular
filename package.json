@@ -21,6 +21,7 @@
     "@angular/compiler": "^17.3.6",
     "@angular/core": "^17.3.6",
     "@angular/forms": "^17.3.6",
+    "@angular/language-server": "^18.2.0",
     "@angular/platform-browser": "^17.3.6",
     "@angular/platform-browser-dynamic": "^17.3.6",
     "@angular/platform-server": "^17.3.6",

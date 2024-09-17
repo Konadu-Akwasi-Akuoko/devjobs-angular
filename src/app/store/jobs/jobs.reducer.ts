@@ -42,10 +42,12 @@ export const jobsReducer = createReducer(
   initialState,
   immerOn(loadJobs, (state: IJobsData, props) => {
     state.jobsLoadingState = 'LOADING';
+    // fetch data overhere from an external source
     state.numberOfCurrentJobs = props.numberOfCurrentJobs;
   }),
   immerOn(setJobsData, (state: IJobsData, props) => {
     state.jobs = props.jobs;
+    // inject http methods here to fetch data.
     state.filtrableJobs = props.jobs;
   }),
   immerOn(setJobsLoadingState, (state: IJobsData, props) => {
@@ -71,7 +73,7 @@ export const jobsReducer = createReducer(
           job.location.toLowerCase().includes(userLocation!) &&
           (job.position.toLowerCase().includes(userTitleCompanyExpertise!) ||
             job.company.toLowerCase().includes(userTitleCompanyExpertise!)) &&
-          (props.isFullTime ? job.contract === 'Full Time' : job.contract)
+          (props.isFullTime ? job.contract === 'Full Time' : job.contract),
       );
     }
   }),
@@ -87,5 +89,5 @@ export const jobsReducer = createReducer(
   }),
   immerOn(setLocations, (state: IJobsData, props) => {
     state.locations = props.locations;
-  })
+  }),
 );
